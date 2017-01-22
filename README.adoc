@@ -2,6 +2,6 @@
 
 My studies and solutions for the course HTCSPD.
 
-I also have a summary with some main ideas in https://drive.google.com/drive/folders/-1B65S47FM-AETTTJrUUt3dHc0VEU?usp=sharing[gdocs].
+I also have a summary with some main ideas in https://drive.google.com/drive/folders/0B65S47FM-AETTTJrUUt3dHc0VEU?usp=sharing[gdocs].
 
 
