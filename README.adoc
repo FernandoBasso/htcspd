@@ -2,44 +2,6 @@
 
 My studies and solutions for the course HTCSPD.
 
-I also have a summary with some main ideas in https://drive.google.com/drive/folders/0B65S47FM-AETTTJrUUt3dHc0VEU?usp=sharing[gdocs].
+I also have a summary with some main ideas in https://drive.google.com/drive/folders/-1B65S47FM-AETTTJrUUt3dHc0VEU?usp=sharing[gdocs].
 
-
-== Naming Conventions
-
-Directory Structure:
-
-----
-part01a/
-part01b/
-partXYz/
-part04a/
-part04b
-----
-
-And source files like,
-
-From video examples:
-
-    vd01-<name>.e.rkt (for Emacs)
-    vd01-<name>.dr.rkt (for DrRacket)
-    vd02-<name>.e.rkt (for Emacs)
-    vd02-<name>.dr.rkt (for DrRacket)
-
-From questions and quizzes:
-
-    qa01-<name>.e.rtk (for Emacs)
-    qa01-<name>.dr.rkt (for DrRacket)
-    qa02-<name>.e.rtk (for Emacs)
-    qa02-<name>.dr.rkt (for DrRacket)
-
-From real coding practice problems:
-
-    pp01-<name>.e.rkt (for Emacs)
-    pp01-<name>.dr.rkt (for DrRacket)
-    pp02-<name>.e.rkt (for Emacs)
-    pp02-<name>.dr.rkt (for DrRacket)
-
-
-And the same vd, qa, and pp prefixes may be used for images.
 
