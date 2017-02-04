@@ -441,9 +441,13 @@ The body of the template is the outline of the function.
 include::./01b-how-to-design-functions/qa01-coord-calc.rkt[]
 ----
 
-=== Simple Practice Problem
+=== Simple Practice Problem from QA
 
-
+.qa: pluralize
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/qa02-pluralize.rkt[]
+----
 
 
 == The End
