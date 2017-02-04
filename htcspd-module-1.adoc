@@ -407,6 +407,45 @@ include::./01a-beginning-student-language/pp06-foo-eval-str-fns.rkt[]
 ----
 
 
+== 1b: How to Design Functions
+
+Using design recipes make harder problems easier, but makes easier problems more cumbersome. But it is a necessary price to pay to learn those recipes.
+
+=== HtDF Recipe
+
+The signature tells the type of data the function consumes and produces. The primitive types are Number, Integer, Natural, String, Image and Boolean.
+
+.vd: double number
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/vd01-double-num.rkt[]
+----
+
+The function consumes a Number and Produces a Number.
+
+The stub is a function definition that:
+
+- has correct function name;
+- has correct number of parameters;
+- produces dummy result of the correct type.
+
+The stub help us make sure the tests/examples actually run.
+
+Every step in the recipe helps us figure with steps after it!
+
+The body of the template is the outline of the function.
+
+.qa: coordinate calculation
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/qa01-coord-calc.rkt[]
+----
+
+=== Simple Practice Problem
+
+
+
+
 == The End
 
 This section is here just so it is easy to navigate to the bottom of the file (by clicking on the outline or toc entry) to continue working.
