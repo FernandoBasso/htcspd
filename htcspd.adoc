@@ -372,6 +372,26 @@ In DrRacket, you right-click the thing you want to search for.
 Or go to the online docs and look at the index.
 
 
+=== Practice Problems
+
+.pp: More arithmetic expressions
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp01-arithmetic-exprs.rkt[]
+----
+
+.pp: Tile images
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp02-tile-imgs.rkt[]
+----
+
+.pp: Compare images
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp03-comp-imgs.rkt[]
+----
+
 
 == The End
 
