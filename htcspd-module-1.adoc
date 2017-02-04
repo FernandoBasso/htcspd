@@ -1,4 +1,4 @@
-= How To Code - Systematic Program Design
+= How To Code - Systematic Program Design - Module 1
 :source-highlighter: pygments
 :pygments-css: class
 :toc: left
@@ -9,10 +9,6 @@
 :webfonts!:
 :icons: font
 :figure-caption!:
-
-
-
-== HTCSPD - Module 1
 
 
 == Welcome
@@ -423,3 +419,4 @@ pre, pre > code { font-family: 'Source Code Pro', 'Ubuntu Mono', 'Anonymous Pro'
 .listingblock .pygments .tok-c1 { font-style: normal; }
 </style>
 ++++
+
