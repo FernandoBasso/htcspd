@@ -2,8 +2,6 @@
 
 My studies and solutions for the course https://www.edx.org/xseries/how-code-systematic-program-design[How To Code — Systematic Program Design at EDX].
 
-I also have a summary with some main ideas in https://drive.google.com/drive/folders/0B65S47FM-AETTTJrUUt3dHc0VEU?usp=sharing[gdocs].
-
 Source files and commits should start with a “tag” like:
 
 - vd: (code from video)
