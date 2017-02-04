@@ -358,6 +358,11 @@ All expressions should return 10.
 There is also `and`, `or` and `not` expressions. Read the docs https://docs.racket-lang.org/htdp-langs/beginner.html[here].
 
 
+=== Using the Stepper
+
+DrRacket's stepper evaluates everything step by step, one step at a time.
+
+
 == The End
 
 This section is here just so it is easy to navigate to the bottom of the file (by clicking on the outline or toc entry) to continue working.
