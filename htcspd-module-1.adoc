@@ -449,6 +449,12 @@ include::./01b-how-to-design-functions/qa01-coord-calc.rkt[]
 include::./01b-how-to-design-functions/qa02-pluralize.rkt[]
 ----
 
+.vd: yell!
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/vd02-yell.rkt[]
+----
+
 
 == The End
 
