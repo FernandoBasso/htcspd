@@ -363,6 +363,16 @@ There is also `and`, `or` and `not` expressions. Read the docs https://docs.rack
 DrRacket's stepper evaluates everything step by step, one step at a time.
 
 
+=== Discovering Primitives
+
+In Emacs+Geiser, write something you think might be the name of a function or operator, like `/` or `triangle`, and type `C-c C-d` (d for definition).
+
+In DrRacket, you right-click the thing you want to search for.
+
+Or go to the online docs and look at the index.
+
+
+
 == The End
 
 This section is here just so it is easy to navigate to the bottom of the file (by clicking on the outline or toc entry) to continue working.
