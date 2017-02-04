@@ -455,6 +455,24 @@ include::./01b-how-to-design-functions/qa02-pluralize.rkt[]
 include::./01b-how-to-design-functions/vd02-yell.rkt[]
 ----
 
+=== When Tests are Incorrect
+
+The problem can be:
+
+- the function definition is wrong;
+- the tests are wrong;
+- they are both wrong;
+
+Check the tests that fail before, and then, if the tests still fail, then check the function definition.
+
+.vd: area
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/vd03-area.rkt[]
+----
+
+The template tells you what things you have available to work with, like a variable/parameter. But then, in the final function, you man not even need it, or use it more than once.
+
 
 == The End
 
@@ -466,6 +484,7 @@ This section is here just so it is easy to navigate to the bottom of the file (b
 #toc ul { list-style-type: circle }
 pre, pre > code { font-family: 'Source Code Pro', 'Ubuntu Mono', 'Anonymous Pro', monospace; }
 .listingblock .pygments .tok-c1 { font-style: normal; }
+ul > li p { margin-bottom: 0; }
 </style>
 ++++
 
