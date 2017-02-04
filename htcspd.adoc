@@ -404,6 +404,12 @@ include::./01a-beginning-student-language/pp04-foo-eval.rkt[]
 include::./01a-beginning-student-language/pp05-larger-num.rkt[]
 ----
 
+.pp: foo eval string functions
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp06-foo-eval-str-fns.rkt[]
+----
+
 
 == The End
 
