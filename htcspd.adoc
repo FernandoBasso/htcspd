@@ -392,6 +392,18 @@ include::./01a-beginning-student-language/pp02-tile-imgs.rkt[]
 include::./01a-beginning-student-language/pp03-comp-imgs.rkt[]
 ----
 
+.pp: foo eval
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp04-foo-eval.rkt[]
+----
+
+.pp: larger number function
+[source,racket,lineos]
+----
+include::./01a-beginning-student-language/pp05-larger-num.rkt[]
+----
+
 
 == The End
 
