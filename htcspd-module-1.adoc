@@ -473,6 +473,23 @@ include::./01b-how-to-design-functions/vd03-area.rkt[]
 
 The template tells you what things you have available to work with, like a variable/parameter. But then, in the final function, you man not even need it, or use it more than once.
 
+=== Varying Recipe Order
+
+Sometimes you are not sure about the signature of the function, or some other thing. In these cases, you can go, do some other things first, like, write the check-expect examples/tests to understand the problem better. There is no problem in doing the steps in a different order. The only thing you should avoid is to write the function definition before any of the other steps.
+
+Remember, DESIGN means “follow the recipe”.
+
+If you have the signature `Image -> Number`, and later in the process you realize that images are in pixels, that means `Natural`, not `Number`, because pixels are >= zero, and there is not such thing as a 3.4 pixel, the are all integers.
+
+Always use the *most specific type* that is correct for each case.
+
+.vd: image-area
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/vd04-image-area.rkt[]
+----
+
+
 
 == The End
 
