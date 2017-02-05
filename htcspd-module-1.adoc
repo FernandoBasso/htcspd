@@ -325,10 +325,34 @@ Code https://gitlab.com/fernandobasso/htcspd/blob/master/01a-beginning-student-l
 
 
 ==== if expression
+
 image::./imgs/013-if-expr.jpg[scaledwidth=100%]
 
+Every time you have:
 
-[source,racket,lineos]
+    (if <expr>
+        #true
+        #false)
+
+You can just do:
+
+    <expr>
+
+Example:
+
+Instead of this:
+
+    (if (> (image-height img) (image-width img))
+        #true
+        #false)
+
+You can do this:
+
+    (> (image-height img) (image-width img))
+
+
+
+[source,racket,lineos
 ----
 include::./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[]
 ----
@@ -488,6 +512,39 @@ Always use the *most specific type* that is correct for each case.
 ----
 include::./01b-how-to-design-functions/vd04-image-area.rkt[]
 ----
+
+
+=== Poorly Formed Problems and Number of Necessary Testes
+
+*DESIGN* is the process of going from a poorly formed problem to a well structured solution.
+
+Functions that produce a boolean have a name that ends with a question mark.
+
+How many tests does a certain function needs to cover *all* possibilities?
+
+Code coverage should be 100%. Boundary conditions/corner cases.
+
+What does it mean “to determine that the image is tall”? Is it tall or not? Produces a boolean, it seems.
+
+When does the function produce `#true` and `#false`?
+
+NOTE: When designing functions which produce a boolean, the purpose specifies how to interpret the output.
+
+DrRacket highlights parts of your functions that were never used. If you see something highlighted after you run the tests, it means that part was never evaluated and your testes are not covering all possible cases! And we *always want 100% test coverage*!
+
+If during the process you think of a new edge case or a subtlety, do this:
+
+- write an example/test right away;
+- update all affected parts of design, even if it means the purpose, or function definition;
+- update existing tests of even the signature if it is necessary.
+
+In our case, we decided that if the width and height are the same the image is not tall.
+
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
+----
+
 
 
 
