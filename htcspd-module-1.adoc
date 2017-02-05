@@ -357,9 +357,6 @@ You can do this:
 include::./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[]
 ----
 
-link:./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[./01a-beginning-student-language/vd02-if-img-tall-wide.rkt]
-
-
 ===== if expression evaluation rules
 
 - If the question is not a value, evaluate it and replace it with its value.
