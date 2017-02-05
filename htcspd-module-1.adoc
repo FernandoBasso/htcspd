@@ -354,7 +354,7 @@ You can do this:
 
 [source,racket,lineos
 ----
-include::./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[]
+include:./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[]
 ----
 
 ===== if expression evaluation rules
@@ -394,37 +394,37 @@ Or go to the online docs and look at the index.
 .pp: More arithmetic expressions
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp01-arithmetic-exprs.rkt[]
+include:./01a-beginning-student-language/pp01-arithmetic-exprs.rkt[]
 ----
 
 .pp: Tile images
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp02-tile-imgs.rkt[]
+include:./01a-beginning-student-language/pp02-tile-imgs.rkt[]
 ----
 
 .pp: Compare images
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp03-comp-imgs.rkt[]
+include:./01a-beginning-student-language/pp03-comp-imgs.rkt[]
 ----
 
 .pp: foo eval
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp04-foo-eval.rkt[]
+include:./01a-beginning-student-language/pp04-foo-eval.rkt[]
 ----
 
 .pp: larger number function
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp05-larger-num.rkt[]
+include:./01a-beginning-student-language/pp05-larger-num.rkt[]
 ----
 
 .pp: foo eval string functions
 [source,racket,lineos]
 ----
-include::./01a-beginning-student-language/pp06-foo-eval-str-fns.rkt[]
+include:./01a-beginning-student-language/pp06-foo-eval-str-fns.rkt[]
 ----
 
 
@@ -439,7 +439,7 @@ The signature tells the type of data the function consumes and produces. The pri
 .vd: double number
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/vd01-double-num.rkt[]
+include:./01b-how-to-design-functions/vd01-double-num.rkt[]
 ----
 
 The function consumes a Number and Produces a Number.
@@ -459,7 +459,7 @@ The body of the template is the outline of the function.
 .qa: coordinate calculation
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/qa01-coord-calc.rkt[]
+include:./01b-how-to-design-functions/qa01-coord-calc.rkt[]
 ----
 
 === Simple Practice Problem from QA
@@ -467,13 +467,13 @@ include::./01b-how-to-design-functions/qa01-coord-calc.rkt[]
 .qa: pluralize
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/qa02-pluralize.rkt[]
+include:./01b-how-to-design-functions/qa02-pluralize.rkt[]
 ----
 
 .vd: yell!
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/vd02-yell.rkt[]
+include:./01b-how-to-design-functions/vd02-yell.rkt[]
 ----
 
 === When Tests are Incorrect
@@ -489,7 +489,7 @@ Check the tests that fail before, and then, if the tests still fail, then check 
 .vd: area
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/vd03-area.rkt[]
+include:./01b-how-to-design-functions/vd03-area.rkt[]
 ----
 
 The template tells you what things you have available to work with, like a variable/parameter. But then, in the final function, you man not even need it, or use it more than once.
@@ -507,7 +507,7 @@ Always use the *most specific type* that is correct for each case.
 .vd: image-area
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/vd04-image-area.rkt[]
+include:./01b-how-to-design-functions/vd04-image-area.rkt[]
 ----
 
 
@@ -539,7 +539,7 @@ In our case, we decided that if the width and height are the same the image is n
 
 [source,racket,lineos]
 ----
-include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
+include:./01b-how-to-design-functions/vd05-img-tall.rkt[]
 ----
 
 
