@@ -338,9 +338,7 @@ You can just do:
 
     <expr>
 
-Example:
-
-Instead of this:
+For example, instead of this:
 
     (if (> (image-height img) (image-width img))
         #true
@@ -349,7 +347,6 @@ Instead of this:
 You can do this:
 
     (> (image-height img) (image-width img))
-
 
 
 [source,racket,lineos
@@ -537,6 +534,7 @@ If during the process you think of a new edge case or a subtlety, do this:
 
 In our case, we decided that if the width and height are the same the image is not tall.
 
+.vd: image tall?
 [source,racket,lineos]
 ----
 include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
