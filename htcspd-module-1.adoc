@@ -548,6 +548,11 @@ include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
 include::./01b-how-to-design-functions/pp01-str-less-than-5.rkt[]
 ----
 
+.pp: boxify
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/pp02-boxify.rkt[]
+----
 
 
 
