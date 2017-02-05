@@ -540,6 +540,15 @@ In our case, we decided that if the width and height are the same the image is n
 include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
 ----
 
+=== Practice Problems
+
+.pp: string less than 5
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/pp01-str-less-than-5.rkt[]
+----
+
+
 
 
 
