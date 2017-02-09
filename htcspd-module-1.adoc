@@ -592,6 +592,11 @@ If you have IFs inside true of false answers, perhaps `cond` is the way to go.
 include::./02-how-to-design-data/vd01-cond-aspect-ratio.rkt[]
 ----
 
+.vd: cond eval steps
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd02-cond-eval-steps.rkt[]
+----
 
 
 == The End
