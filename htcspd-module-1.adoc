@@ -288,7 +288,7 @@ Code https://gitlab.com/fernandobasso/htcspd/blob/master/01a-beginning-student-l
 
 'Predicates' are primitive functions that produce a boolean value.
 
-....
+----
 (define W 100)
 (define H 100)
 (> W H)
@@ -305,7 +305,7 @@ Code https://gitlab.com/fernandobasso/htcspd/blob/master/01a-beginning-student-l
 (string=? "Linux" "linux")
 #true
 #false
-....
+----
 
 
 
@@ -349,7 +349,7 @@ You can do this:
     (> (image-height img) (image-width img))
 
 
-[source,racket,lineos
+[source,racket,lineos]
 ----
 include::./01a-beginning-student-language/vd02-if-img-tall-wide.rkt[]
 ----
@@ -573,6 +573,25 @@ include::./01b-how-to-design-functions/pp03-double-error.rkt[]
 ----
 include::./01b-how-to-design-functions/qa03-larger-image.rkt[]
 ----
+
+
+== 2: How to Design Data
+
+It turns out that the *design of data drives the design of functions*.
+
+
+=== cond expressions
+
+If you have IFs inside true of false answers, perhaps `cond` is the way to go.
+
+`cond` is a _multi-armed conditional_. It can have any number of cases all at the same level.
+
+.vd: image aspect ration with cond
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd01-cond-aspect-ratio.rkt[]
+----
+
 
 
 == The End
