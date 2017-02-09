@@ -542,11 +542,15 @@ include::./01b-how-to-design-functions/vd05-img-tall.rkt[]
 
 === Practice Problems
 
+==== pp: string length less than 5
+
 .pp: string less than 5
 [source,racket,lineos]
 ----
 include::./01b-how-to-design-functions/pp01-str-less-than-5.rkt[]
 ----
+
+==== pp: boxify
 
 .pp: boxify
 [source,racket,lineos]
@@ -554,12 +558,21 @@ include::./01b-how-to-design-functions/pp01-str-less-than-5.rkt[]
 include::./01b-how-to-design-functions/pp02-boxify.rkt[]
 ----
 
+==== pp: double error
+
 .pp: double error
 [source,racket,lineos]
 ----
 include::./01b-how-to-design-functions/pp03-double-error.rkt[]
 ----
 
+==== qa larger image
+
+.qa: larger image
+[source,racket,lineos]
+----
+include::./01b-how-to-design-functions/qa03-larger-image.rkt[]
+----
 
 
 == The End
