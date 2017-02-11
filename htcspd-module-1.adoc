@@ -699,12 +699,41 @@ include::./02-how-to-design-data/vd07-interv-seat-num-datadef.rkt[]
 
 === Enumeration
 
+Enumeration data definitions are used when the information to be represented consists of two or more distinct values.
+
 .vd: data def letter grade
 [source,racket,lineos]
 ----
 include::./02-how-to-design-data/vd08-letter-grade-enumeration.rkt[]
 ----
 
+=== Itemization
+
+Itemization is used when the domain information is comprised of 2 or more subclasses, at least one of which is not a distinct data item.
+
+.countdown data def
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd09-countdown-datadef.rkt[]
+----
+
+In a mixed data itemization template the type specific predicates must be guarded against being called on the wrong type of data.
+
+.seat num data def
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd10-seat-num-itemization.rkt[]
+----
+
+Rules for simplifying templates:
+
+1. If a given subclass is the last subclass of its type, we can reduce the test to just the guard, ie. `(number? arg)`.
+2. If all remaining subclasses are of the same type, then we can eliminate all of the guards.
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd11-traffic-light.rkt[]
+----
 
 
 == The End
