@@ -647,6 +647,17 @@ Data definition simplifies function:
 - provides template.
 
 
+=== Atomic Non-Distinct
+
+ATOMIC DATA can't be taken apart into pieces that are meaningfully part of the same domain. For instance, you can't take the city name “Boston” and break it in parts/letters and still each part be meaningful for the city name.
+
+.data definition example: city name
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd05-datadef-city-name.rkt[]
+----
+
+
 
 == The End
 
