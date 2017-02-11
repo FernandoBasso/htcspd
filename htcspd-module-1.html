@@ -560,6 +560,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#htdf_x_structure_of_data_orthogonality">HtDF X Structure of Data Orthogonality</a></li>
+<li><a href="#interval">Interval</a></li>
 </ul>
 </li>
 <li><a href="#the_end">The End</a></li>
@@ -2941,6 +2942,58 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <p>Then there are lists and trees.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="interval"><a class="link" href="#interval">Interval</a></h3>
+<div class="listingblock">
+<div class="title">vd: data def aisle seat</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Imagine that you are designing a program to manage ticket sales for a</span>
+<span class="tok-c1">; theatre. (Also imagine that the theatre is perfectly rectangular in shape!)</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a data definition to represent a seat number in a row, where each</span>
+<span class="tok-c1">; row has 32 seats. (Just the seat number, not the row number.)</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; SeatNum is Natural[1, 30]</span>
+<span class="tok-c1">;; Interp: seat numbers in a row, 1 and 32 are aisle seats.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">SN1</span> <span class="tok-mi">1</span><span class="tok-p">)</span>    <span class="tok-c1">; aisle</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">SN2</span> <span class="tok-mi">12</span><span class="tok-p">)</span>   <span class="tok-c1">; middle</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">SN3</span> <span class="tok-mi">32</span><span class="tok-p">)</span>   <span class="tok-c1">; aisle</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-seat-num</span> <span class="tok-n">sn</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">sn</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - atomic non-distinct: Natural[1, 30]</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2960,7 +3013,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-11 11:32:55 BRST
+Last updated 2017-02-11 13:51:11 BRST
 </div>
 </div>
 </body>

@@ -689,6 +689,14 @@ HtDW: How to Design Worlds
 
 Then there are lists and trees.
 
+=== Interval
+
+.vd: data def aisle seat
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd07-interv-seat-num-datadef.rkt[]
+----
+
 
 == The End
 
