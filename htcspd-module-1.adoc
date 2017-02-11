@@ -657,6 +657,17 @@ ATOMIC DATA can't be taken apart into pieces that are meaningfully part of the s
 include::./02-how-to-design-data/vd05-datadef-city-name.rkt[]
 ----
 
+=== HtDF With Non-Primitive Data
+
+Functions that produce a boolean should have at least two tests: one that produces #true and one that produces #false.
+
+Templates show what you can use, not what you must use. Sometimes you will delete parts of templates, and sometimes add extra things.
+
+.HtDF with non-priminitve data
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd05-best-city.rkt[]
+----
 
 
 == The End
