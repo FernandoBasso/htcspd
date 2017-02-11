@@ -697,6 +697,15 @@ Then there are lists and trees.
 include::./02-how-to-design-data/vd07-interv-seat-num-datadef.rkt[]
 ----
 
+=== Enumeration
+
+.vd: data def letter grade
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd08-letter-grade-enumeration.rkt[]
+----
+
+
 
 == The End
 
