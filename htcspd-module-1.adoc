@@ -671,7 +671,15 @@ include::./02-how-to-design-data/vd05-best-city.rkt[]
 
 === HtDF X Structure of Data Orthogonality
 
+Orthogonal means “mostly independent”. HtDF and HtDD recipes are orthogonal, as we learn more forms of data, the recipes will continue to work mostly unchanged.
 
+Primitive: number, string;
+
+Non-primitive (designed with HtDD): atomic, TLColor, CityName, Enumeration, Interval, Itemization, Distinct (a special thing).
+
+HtDW: How to Design Worlds
+
+Then there are lists and trees.
 
 
 == The End
