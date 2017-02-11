@@ -669,6 +669,14 @@ Templates show what you can use, not what you must use. Sometimes you will delet
 include::./02-how-to-design-data/vd05-best-city.rkt[]
 ----
 
+==== qa: design data icon
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/pp01-icon-too-tall.rkt[]
+----
+
+
 === HtDF X Structure of Data Orthogonality
 
 Orthogonal means “mostly independent”. HtDF and HtDD recipes are orthogonal, as we learn more forms of data, the recipes will continue to work mostly unchanged.

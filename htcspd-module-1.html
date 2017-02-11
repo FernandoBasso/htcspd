@@ -2841,7 +2841,86 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </div>
 <div class="sect3">
 <h4 id="qa_design_data_icon"><a class="link" href="#qa_design_data_icon">qa: design data icon</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/image</span><span class="tok-p">)</span>
 
+<span class="tok-c1">;</span>
+<span class="tok-c1">; You are told that the extension you are working on can only</span>
+<span class="tok-c1">; accomodate icons that are at most 30 pixels high, so we would like</span>
+<span class="tok-c1">; to design a function that checks if an image has a height of more</span>
+<span class="tok-c1">; than 30 pixels.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; DATA DEFINITION</span>
+
+<span class="tok-c1">;; Icon is Image</span>
+<span class="tok-c1">;; Interp: the image of an icon.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">RUNNING-STICKMAN-ICON</span> <span class="tok-p">(</span><span class="tok-n">bitmap</span> <span class="tok-s2">&quot;./imgs/015-ic-running-stick-person.jpg&quot;</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">STEP-ICON</span> <span class="tok-p">(</span><span class="tok-n">bitmap</span> <span class="tok-s2">&quot;./imgs/016-ic-next-step.jpg&quot;</span><span class="tok-p">))</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-icon</span> <span class="tok-n">i</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">i</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - atomic non-distinct: Image</span>
+
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;; Icon -&gt; Boolean</span>
+<span class="tok-c1">;; Produce #true if the given icon is more than 30 pixels high.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">too-tall?</span> <span class="tok-n">STEP-ICON</span><span class="tok-p">)</span> <span class="tok-no">#false</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">too-tall?</span> <span class="tok-n">RUNNING-STICKMAN-ICON</span><span class="tok-p">)</span> <span class="tok-no">#true</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (too-tall? i) #false)</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">too-tall?</span> <span class="tok-n">i</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-nb">&gt;</span> <span class="tok-p">(</span><span class="tok-n">image-height</span> <span class="tok-n">i</span><span class="tok-p">)</span> <span class="tok-mi">25</span><span class="tok-p">))</span>
+
+<span class="tok-c1">; ( . Y . )</span>
+<span class="tok-c1">;  \     /</span>
+</td></tr></table></code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -2881,7 +2960,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-11 10:54:21 BRST
+Last updated 2017-02-11 11:32:55 BRST
 </div>
 </div>
 </body>
