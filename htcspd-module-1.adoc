@@ -598,6 +598,55 @@ include::./02-how-to-design-data/vd01-cond-aspect-ratio.rkt[]
 include::./02-how-to-design-data/vd02-cond-eval-steps.rkt[]
 ----
 
+=== Data Definitions
+
+.part of traffic simulation
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd03-part-traffic-sim.rkt[]
+----
+
+The function consumes a natural. Can I call it with 3 as well? What about 50, 200, etc?
+
+If I pass 2 to the function it produces zero? Why? What the poop‽
+
+==== program domain vs program
+
+A light is red (program domain), but it is the value 0 in the program. We represent real things with data. Red light is represented with zero, for instance.
+
+In the problem domain we have information, and translate that as data in the program.
+
+TIP: *Data Definitions* describe how we are representing information as data.
+
+.part of traffic simulation with data definition
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd04-traffic-light-datadef.rkt[]
+----
+
+- Type Comment: defines a new type name and shows how to form data of that type.
+- Interpretation: explains how to interpret data of this type as information thereby establishing the information/data correspondece.
+- Template: template function for handling that kind/structure of data.
+- Singnature: tells the function consumes TLColor, and that means I cannot pass the function a 3 or 50 or 200, because a TLColor is either 1, or 2, or 3. And it just produces a TLColor.
+
+A Data Definition also tells you all the things the function does not consume and does not produce, which is very important as well.
+
+Data definition describes:
+
+- how to for data of a new type;
+- how to represent information as data;
+- how to interpret data as information;
+- template for operating on data.
+
+Data definition simplifies function:
+
+- restricts data consumed;
+- restricts data produced;
+- helps generate examples;
+- provides template.
+
+
 
 == The End
 
