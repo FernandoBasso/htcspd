@@ -626,9 +626,9 @@ include::./02-how-to-design-data/vd04-traffic-light-datadef.rkt[]
 ----
 
 - Type Comment: defines a new type name and shows how to form data of that type.
-- Interpretation: explains how to interpret data of this type as information thereby establishing the information/data correspondece.
+- Interpretation: explains how to interpret data of this type as information thereby establishing the information/data correspondence.
 - Template: template function for handling that kind/structure of data.
-- Singnature: tells the function consumes TLColor, and that means I cannot pass the function a 3 or 50 or 200, because a TLColor is either 1, or 2, or 3. And it just produces a TLColor.
+- Signature: tells the function consumes TLColor, and that means I cannot pass the function a 3 or 50 or 200, because a TLColor is either 1, or 2, or 3. And it just produces a TLColor.
 
 A Data Definition also tells you all the things the function does not consume and does not produce, which is very important as well.
 
@@ -663,11 +663,15 @@ Functions that produce a boolean should have at least two tests: one that produc
 
 Templates show what you can use, not what you must use. Sometimes you will delete parts of templates, and sometimes add extra things.
 
-.HtDF with non-priminitve data
+.HtDF with non-primiitve data
 [source,racket,lineos]
 ----
 include::./02-how-to-design-data/vd05-best-city.rkt[]
 ----
+
+=== HtDF X Structure of Data Orthogonality
+
+
 
 
 == The End
