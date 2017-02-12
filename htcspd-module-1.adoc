@@ -774,6 +774,12 @@ Identifying the structure of the information is a key step in program design.
 include::./02-how-to-design-data/pp02-demolish.rtk[]
 ----
 
+==== pp: rocket descent (interval)
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/pp03-rocket-descent.rkt[]
+----
 
 
 
