@@ -751,6 +751,15 @@ include::./02-how-to-design-data/vd12-aisle-seat.rkt[]
 include::./02-how-to-design-data/vd13-bump-up-grade-enumeration.rkt[]
 ----
 
+=== HtDF With Itemization
+
+You could name the function `countdown->image` instead of `countdown-to-image`.
+
+[source,racket,lineos]
+----
+include::02-how-to-design-data/vd14-countdown-to-image-itemization.rkt[]
+----
+
 
 == The End
 
