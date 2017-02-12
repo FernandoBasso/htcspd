@@ -757,8 +757,24 @@ You could name the function `countdown->image` instead of `countdown-to-image`.
 
 [source,racket,lineos]
 ----
-include::02-how-to-design-data/vd14-countdown-to-image-itemization.rkt[]
+include::./02-how-to-design-data/vd14-countdown-to-image-itemization.rkt[]
 ----
+
+
+=== Structure of Information Flows Through
+
+Identifying the structure of the information is a key step in program design.
+
+=== Practice Problems
+
+==== pp: demolish (enumeration)
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/pp02-demolish.rtk[]
+----
+
+
 
 
 == The End
