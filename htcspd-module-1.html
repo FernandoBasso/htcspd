@@ -564,6 +564,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#enumeration">Enumeration</a></li>
 <li><a href="#itemization">Itemization</a></li>
 <li><a href="#htdf_with_interval">HtDF With Interval</a></li>
+<li><a href="#htdf_with_enumeration">HtDF With Enumeration</a></li>
 </ul>
 </li>
 <li><a href="#the_end">The End</a></li>
@@ -3354,10 +3355,109 @@ When designing functions which produce a boolean, the purpose specifies how to i
 
 <span class="tok-c1">;(define (aisle? sn) #false) ;stub</span>
 
-<span class="tok-c1">; Used template from SeatNum.</span>
+<span class="tok-c1">;&lt;used template from SeatNum&gt;</span>
 <span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">aisle?</span> <span class="tok-n">sn</span><span class="tok-p">)</span>
   <span class="tok-p">(</span><span class="tok-k">or</span> <span class="tok-p">(</span><span class="tok-nb">=</span> <span class="tok-n">sn</span> <span class="tok-mi">1</span><span class="tok-p">)</span>
       <span class="tok-p">(</span><span class="tok-nb">=</span> <span class="tok-n">sn</span> <span class="tok-mi">32</span><span class="tok-p">)))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="htdf_with_enumeration"><a class="link" href="#htdf_with_enumeration">HtDF With Enumeration</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Using the LetterGrade data definition below design a function that</span>
+<span class="tok-c1">; consumes a letter grade and produces the next highest letter grade.</span>
+<span class="tok-c1">; Call your function bump-up.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+
+<span class="tok-c1">;; LetterGrade is one of:</span>
+<span class="tok-c1">;;  - &quot;A&quot;</span>
+<span class="tok-c1">;;  - &quot;B&quot;</span>
+<span class="tok-c1">;;  - &quot;C&quot;</span>
+<span class="tok-c1">;; interp. the letter grade in a course</span>
+<span class="tok-c1">;; &lt;examples are redundant for enumerations&gt;</span>
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-letter-grade</span> <span class="tok-n">lg</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;B&quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;C&quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  one-of: 3 cases</span>
+<span class="tok-c1">;;  atomic distinct: &quot;A&quot;</span>
+<span class="tok-c1">;;  atomic distinct: &quot;B&quot;</span>
+<span class="tok-c1">;;  atomic distinct: &quot;C&quot;</span>
+
+
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;; LetterGrade -&gt; LetterGrade</span>
+<span class="tok-c1">;; Produce next highest letter grade (no change for A).</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">bump-up</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">bump-up</span> <span class="tok-s2">&quot;B&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">bump-up</span> <span class="tok-s2">&quot;C&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;B&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (bump-up lg) &quot;A&quot;) ;stub</span>
+
+<span class="tok-c1">;&lt;used template from LetterGrade&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">bump-up</span> <span class="tok-n">lg</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;B&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;A&quot;</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-n">lg</span> <span class="tok-s2">&quot;C&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;B&quot;</span><span class="tok-p">]))</span>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -3381,7 +3481,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-12 09:19:37 BRST
+Last updated 2017-02-12 09:32:03 BRST
 </div>
 </div>
 </body>
