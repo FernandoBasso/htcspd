@@ -735,6 +735,15 @@ Rules for simplifying templates:
 include::./02-how-to-design-data/vd11-traffic-light.rkt[]
 ----
 
+=== HtDF With Interval
+
+When writing tests for functions operating on intervals be sure to test closed boundaries as well as midpoints. As always, be sure to include enough tests to check all other points of variance in behaviour across the interval.
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/vd12-aisle-seat.rkt[]
+----
+
 
 == The End
 
