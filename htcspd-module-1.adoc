@@ -586,7 +586,7 @@ If you have IFs inside true of false answers, perhaps `cond` is the way to go.
 
 `cond` is a _multi-armed conditional_. It can have any number of cases all at the same level.
 
-.vd: image aspect ration with cond
+.vd: image aspect ratio with cond
 [source,racket,lineos]
 ----
 include::./02-how-to-design-data/vd01-cond-aspect-ratio.rkt[]
@@ -612,7 +612,7 @@ If I pass 2 to the function it produces zero? Why? What the poop‽
 
 ==== program domain vs program
 
-A light is red (program domain), but it is the value 0 in the program. We represent real things with data. Red light is represented with zero, for instance.
+A light is red (program domain), but we may represent it with the value 0 in the program. We represent real things with data. Red light is represented with zero, for instance.
 
 In the problem domain we have information, and translate that as data in the program.
 
@@ -634,7 +634,7 @@ A Data Definition also tells you all the things the function does not consume an
 
 Data definition describes:
 
-- how to for data of a new type;
+- how to form data of a new type;
 - how to represent information as data;
 - how to interpret data as information;
 - template for operating on data.
@@ -780,6 +780,52 @@ include::./02-how-to-design-data/pp02-demolish.rtk[]
 ----
 include::./02-how-to-design-data/pp03-rocket-descent.rkt[]
 ----
+
+=== qz: age healt problem
+
+[source,racket,lineos]
+----
+include::./02-how-to-design-data/qz-age-healt-problem.rtk[]
+----
+
+
+
+== How to Design Worlds
+
+Learning Goals:
+
+- Be able to explain the inherent structure of interactive graphical programs.
+- Be able to use the How to Design Worlds (HtDW) recipe to design interactive programs with atomic world state.
+- Be able to read and write big-bang expressions.
+
+
+=== The Big-Bang Mechanism
+
+`big-bang` is polymorphic: it works for any type of world state.
+
+=== Domain Analysis
+
+- Analyze the program to identify constant information.
+
+=== Program Through the Main Function
+
+Here we use the wish-list technique to manage the overall design work.
+
+Templates gives you pieces of the solutions but also steps of the process.
+
+*Traceability*: the ability to see where each analysis element winds up in the resulting program.
+
+Using named constants provides a single point of control — changing HEIGHT also changes CTR-Y.
+
+A wish-list entry has a signature, purpose, `!!!` and a stub. It is a promise to come back and finish this function later. The stubs in wish list entries can allow programs to at least partially run.
+
+=== Working Through The Wish List
+
+[source,racket,lineos]
+----
+include::./03a-how-to-design-worlds/vd01-cat.rkt[]
+----
+
 
 
 

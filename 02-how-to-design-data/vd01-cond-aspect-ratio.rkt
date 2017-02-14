@@ -6,7 +6,7 @@
 (define IMG3 (rectangle 20 10 "solid" "red"))
 
 ;; Image -> String
-;; Produces string describing shapre of image: "tall", "square" or "wide".
+;; Produces string describing shape of image: "tall", "square" or "wide".
 (check-expect (aspect-ratio IMG1) "tall")
 (check-expect (aspect-ratio IMG2) "square")
 (check-expect (aspect-ratio IMG3) "wide")
