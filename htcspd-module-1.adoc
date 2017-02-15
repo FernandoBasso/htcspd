@@ -826,7 +826,11 @@ A wish-list entry has a signature, purpose, `!!!` and a stub. It is a promise to
 include::./03a-how-to-design-worlds/vd01-cat.rkt[]
 ----
 
+=== Improving a World Program — Add SPEED
 
+Speed was an _unidentified_ constant that our program used blindly.
+
+The Analysis is a *model* of the program. It correctly describes the structure of the program (but in less detail), easing our task of planning our work on the program.
 
 
 == The End
