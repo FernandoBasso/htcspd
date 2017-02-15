@@ -832,6 +832,22 @@ Speed was an _unidentified_ constant that our program used blindly.
 
 The Analysis is a *model* of the program. It correctly describes the structure of the program (but in less detail), easing our task of planning our work on the program.
 
+=== Improving a World Program — Add Key Handler
+
+Templating and testing large enumerations is also talked about in this part.
+
+The white-box test takes advantage of knowing that the `cond` has just two cases.
+
+For large enumerations the template will have `cond` clauses for all the particular cases, and an `else` clause for everything else.
+
+[source,racket,lineos]
+----
+include::./03a-how-to-design-worlds/vd03-cat-kevt.rkt[]
+----
+
+Add mouse event make cat go to the x position of the mouse.
+
+
 
 == The End
 
