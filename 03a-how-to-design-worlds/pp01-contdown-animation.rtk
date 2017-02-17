@@ -1,0 +1,92 @@
+#lang htdp/bsl
+(require 2htdp/image)
+(require 2htdp/universe)
+
+;
+; PROBLEM:
+;
+; Design a world program that represents a countdown. The program should
+; display the number of seconds remaining and should decrease at each
+; clock tick. Upon reaching zero, it should stay there and not change.
+;
+; To make your countdown progress at a reasonable speed, you can use the
+; rate option to on-tick. If you say, for example,
+; (on-tick advance-countdown 1) then big-bang will wait 1 second between
+; calls to advance-countdown.
+;
+; Remember to follow the HtDW recipe! Be sure to do a proper domain
+; analysis before starting to work on the code file.
+;
+; Once you are finished the simple version of the program, you can improve
+; it by reseting the countdown to ten when you press the spacebar.
+;
+
+;; A simple countdown animation.
+
+;; =========
+;; CONSTANTS
+
+(define TXT-COLOR "black")
+(define TXT-SIZE 24)
+(define WIDTH 36)
+(define HEIGHT WIDTH)
+(define CTR-X (/ WIDTH 2))
+(define CTR-Y (/ HEIGHT 2))
+(define MTS (empty-scene WIDTH HEIGHT))
+
+;; Countdown is Integer[0, 10]
+;; Interp: Current number of seconds remaining in countdown.
+(define C1 10) ; start
+(define C2  5) ; middle
+(define C3  0) ; end
+
+#;
+(define (fn-for-countdown cd)
+  (... cd))
+
+;; Template rules used:
+;;  - atomic non-distinct: Integer[0, 10]
+
+;; =========
+;; FUNCTIONS
+
+;; Countdown -> Countdown
+;; Start the world with (main 10).
+(define (main cd)
+  (big-bang cd                               ; Countdown
+            (on-tick advance-countdown 1)    ; Countdown -> Countdown
+            (to-draw render-countdown)))     ; Countdown -> Image
+
+
+;; Countdown -> Countdown
+;; Produce next countdown.
+(check-expect (advance-countdown 10) (- 10 1))
+(check-expect (advance-countdown 0) 0)
+
+;(define (advance-countdown cd) 0) ;stub
+
+;<use template from Countdown>
+(define (advance-countdown cd)
+  (if (= cd 0)
+      0
+      (- cd 1)))
+
+;; Countdown -> Image
+;; Render display with current countdown number.
+(check-expect (render-countdown 5)
+              (place-image
+               (text (number->string 5) TXT-SIZE TXT-COLOR)
+               CTR-X
+               CTR-Y
+               MTS))
+
+;(define (render-countdown cd) MTS) ;stub
+
+;<took template from Countdown>
+(define (render-countdown cd)
+  (place-image
+   (text (number->string cd) TXT-SIZE TXT-COLOR)
+   CTR-Y
+   CTR-X
+   MTS))
+

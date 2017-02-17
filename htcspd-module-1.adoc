@@ -848,6 +848,17 @@ include::./03a-how-to-design-worlds/vd03-cat-kevt.rkt[]
 Add mouse event make cat go to the x position of the mouse.
 
 
+=== Practice Problems
+
+==== Countdonw Animation
+
+[source,racket,lineos]
+----
+include::./03a-how-to-design-worlds/pp01-contdown-animation.rtk[]
+----
+
+==== Traffic Light
+
 
 == The End
 

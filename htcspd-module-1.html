@@ -584,6 +584,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#working_through_the_wish_list">Working Through The Wish List</a></li>
 <li><a href="#improving_a_world_program_add_speed">Improving a World Program — Add SPEED</a></li>
 <li><a href="#improving_a_world_program_add_key_handler">Improving a World Program — Add Key Handler</a></li>
+<li><a href="#practice_problems_4">Practice Problems</a>
+<ul class="sectlevel3">
+<li><a href="#countdonw_animation">Countdonw Animation</a></li>
+<li><a href="#traffic_light">Traffic Light</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#the_end">The End</a></li>
@@ -4577,6 +4583,202 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <p>Add mouse event make cat go to the x position of the mouse.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="practice_problems_4"><a class="link" href="#practice_problems_4">Practice Problems</a></h3>
+<div class="sect3">
+<h4 id="countdonw_animation"><a class="link" href="#countdonw_animation">Countdonw Animation</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/image</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/universe</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a world program that represents a countdown. The program should</span>
+<span class="tok-c1">; display the number of seconds remaining and should decrease at each</span>
+<span class="tok-c1">; clock tick. Upon reaching zero, it should stay there and not change.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; To make your countdown progress at a reasonable speed, you can use the</span>
+<span class="tok-c1">; rate option to on-tick. If you say, for example,</span>
+<span class="tok-c1">; (on-tick advance-countdown 1) then big-bang will wait 1 second between</span>
+<span class="tok-c1">; calls to advance-countdown.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Remember to follow the HtDW recipe! Be sure to do a proper domain</span>
+<span class="tok-c1">; analysis before starting to work on the code file.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Once you are finished the simple version of the program, you can improve</span>
+<span class="tok-c1">; it by reseting the countdown to ten when you press the spacebar.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; A simple countdown animation.</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; CONSTANTS</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">TXT-COLOR</span> <span class="tok-s2">&quot;black&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">TXT-SIZE</span> <span class="tok-mi">24</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">36</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">HEIGHT</span> <span class="tok-n">WIDTH</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CTR-X</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CTR-Y</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">HEIGHT</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">MTS</span> <span class="tok-p">(</span><span class="tok-n">empty-scene</span> <span class="tok-n">WIDTH</span> <span class="tok-n">HEIGHT</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Countdown is Integer[0, 10]</span>
+<span class="tok-c1">;; Interp: Current number of seconds remaining in countdown.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C1</span> <span class="tok-mi">10</span><span class="tok-p">)</span> <span class="tok-c1">; start</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C2</span>  <span class="tok-mi">5</span><span class="tok-p">)</span> <span class="tok-c1">; middle</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C3</span>  <span class="tok-mi">0</span><span class="tok-p">)</span> <span class="tok-c1">; end</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-countdown</span> <span class="tok-n">cd</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">cd</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - atomic non-distinct: Integer[0, 10]</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;; Countdown -&gt; Countdown</span>
+<span class="tok-c1">;; Start the world with (main 10).</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">main</span> <span class="tok-n">cd</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">big-bang</span> <span class="tok-n">cd</span>                               <span class="tok-c1">; Countdown</span>
+            <span class="tok-p">(</span><span class="tok-n">on-tick</span> <span class="tok-n">advance-countdown</span> <span class="tok-mi">1</span><span class="tok-p">)</span>    <span class="tok-c1">; Countdown -&gt; Countdown</span>
+            <span class="tok-p">(</span><span class="tok-n">to-draw</span> <span class="tok-n">render-countdown</span><span class="tok-p">)))</span>     <span class="tok-c1">; Countdown -&gt; Image</span>
+
+
+<span class="tok-c1">;; Countdown -&gt; Countdown</span>
+<span class="tok-c1">;; Produce next countdown.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">advance-countdown</span> <span class="tok-mi">10</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-mi">10</span> <span class="tok-mi">1</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">advance-countdown</span> <span class="tok-mi">0</span><span class="tok-p">)</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (advance-countdown cd) 0) ;stub</span>
+
+<span class="tok-c1">;&lt;use template from Countdown&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">advance-countdown</span> <span class="tok-n">cd</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nb">=</span> <span class="tok-n">cd</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+      <span class="tok-mi">0</span>
+      <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-n">cd</span> <span class="tok-mi">1</span><span class="tok-p">)))</span>
+
+<span class="tok-c1">;; Countdown -&gt; Image</span>
+<span class="tok-c1">;; Render display with current countdown number.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-countdown</span> <span class="tok-mi">5</span><span class="tok-p">)</span>
+              <span class="tok-p">(</span><span class="tok-n">place-image</span>
+               <span class="tok-p">(</span><span class="tok-n">text</span> <span class="tok-p">(</span><span class="tok-nb">number-&gt;string</span> <span class="tok-mi">5</span><span class="tok-p">)</span> <span class="tok-n">TXT-SIZE</span> <span class="tok-n">TXT-COLOR</span><span class="tok-p">)</span>
+               <span class="tok-n">CTR-X</span>
+               <span class="tok-n">CTR-Y</span>
+               <span class="tok-n">MTS</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (render-countdown cd) MTS) ;stub</span>
+
+<span class="tok-c1">;&lt;took template from Countdown&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">render-countdown</span> <span class="tok-n">cd</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">place-image</span>
+   <span class="tok-p">(</span><span class="tok-n">text</span> <span class="tok-p">(</span><span class="tok-nb">number-&gt;string</span> <span class="tok-n">cd</span><span class="tok-p">)</span> <span class="tok-n">TXT-SIZE</span> <span class="tok-n">TXT-COLOR</span><span class="tok-p">)</span>
+   <span class="tok-n">CTR-Y</span>
+   <span class="tok-n">CTR-X</span>
+   <span class="tok-n">MTS</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="traffic_light"><a class="link" href="#traffic_light">Traffic Light</a></h4>
+
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -4596,7 +4798,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-15 20:58:06 BRST
+Last updated 2017-02-17 19:36:19 BRST
 </div>
 </div>
 </body>
