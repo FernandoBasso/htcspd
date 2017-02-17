@@ -840,12 +840,21 @@ The white-box test takes advantage of knowing that the `cond` has just two cases
 
 For large enumerations the template will have `cond` clauses for all the particular cases, and an `else` clause for everything else.
 
+==== cat animation, key event
+
+.cat animation with key event
 [source,racket,lineos]
 ----
 include::./03a-how-to-design-worlds/vd03-cat-kevt.rkt[]
 ----
 
-Add mouse event make cat go to the x position of the mouse.
+==== cat animation, mouse event
+
+.cat animation with mouse event
+[source,racket,lineos]
+----
+include::./03a-how-to-design-worlds/vd04-cat-mevt.rkt[]
+----
 
 
 === Practice Problems

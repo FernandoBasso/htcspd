@@ -583,7 +583,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#program_through_the_main_function">Program Through the Main Function</a></li>
 <li><a href="#working_through_the_wish_list">Working Through The Wish List</a></li>
 <li><a href="#improving_a_world_program_add_speed">Improving a World Program — Add SPEED</a></li>
-<li><a href="#improving_a_world_program_add_key_handler">Improving a World Program — Add Key Handler</a></li>
+<li><a href="#improving_a_world_program_add_key_handler">Improving a World Program — Add Key Handler</a>
+<ul class="sectlevel3">
+<li><a href="#cat_animation_key_event">cat animation, key event</a></li>
+<li><a href="#cat_animation_mouse_event">cat animation, mouse event</a></li>
+</ul>
+</li>
 <li><a href="#practice_problems_4">Practice Problems</a>
 <ul class="sectlevel3">
 <li><a href="#countdonw_animation">Countdonw Animation</a></li>
@@ -4365,7 +4370,10 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <div class="paragraph">
 <p>For large enumerations the template will have <code>cond</code> clauses for all the particular cases, and an <code>else</code> clause for everything else.</p>
 </div>
+<div class="sect3">
+<h4 id="cat_animation_key_event"><a class="link" href="#cat_animation_key_event">cat animation, key event</a></h4>
 <div class="listingblock">
+<div class="title">cat animation with key event</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">  1
   2
@@ -4579,8 +4587,264 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </td></tr></table></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Add mouse event make cat go to the x position of the mouse.</p>
+</div>
+<div class="sect3">
+<h4 id="cat_animation_mouse_event"><a class="link" href="#cat_animation_mouse_event">cat animation, mouse event</a></h4>
+<div class="listingblock">
+<div class="title">cat animation with mouse event</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/image</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/universe</span><span class="tok-p">)</span>
+
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Use the How to Design Worlds recipe to design an interactive</span>
+<span class="tok-c1">; program in which a cat starts at the left edge of the display</span>
+<span class="tok-c1">; and then walks across the screen to the right. When the cat</span>
+<span class="tok-c1">; reaches the right edge it should just keep going right off</span>
+<span class="tok-c1">; the screen.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Once your design is complete revise it to add a new feature,</span>
+<span class="tok-c1">; which is that pressing the space key should cause the cat to</span>
+<span class="tok-c1">; go back to the left edge of the screen. When you do this, go</span>
+<span class="tok-c1">; all the way back to your domain analysis and incorporate the</span>
+<span class="tok-c1">; new feature.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; To help you get started, here is a picture of a cat, which we</span>
+<span class="tok-c1">; have taken from the 2nd edition of the How to Design Programs</span>
+<span class="tok-c1">; book on which this course is based.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; A cat that walks from left to right across the screen.</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; CONSTANTS</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CAT-IMG</span> <span class="tok-p">(</span><span class="tok-n">bitmap</span> <span class="tok-s2">&quot;./imgs/017-cat.jpg&quot;</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">600</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">HEIGHT</span> <span class="tok-mi">400</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CTR-Y</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">HEIGHT</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">MTS</span> <span class="tok-p">(</span><span class="tok-n">empty-scene</span> <span class="tok-n">WIDTH</span> <span class="tok-n">HEIGHT</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">SPEED</span> <span class="tok-mi">3</span><span class="tok-p">)</span>
+
+
+<span class="tok-c1">;; ================</span>
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+
+<span class="tok-c1">;; Cat is Number</span>
+<span class="tok-c1">;; Interp: x position of the cat in screen coords.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C1</span> <span class="tok-mi">0</span><span class="tok-p">)</span>           <span class="tok-c1">;; left edgle</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C2</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">2</span><span class="tok-p">))</span> <span class="tok-c1">;; middle</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C3</span> <span class="tok-n">WIDTH</span><span class="tok-p">)</span>       <span class="tok-c1">;; right edge</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-cat</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">c</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - atomic non-distinct: Number</span>
+
+
+<span class="tok-c1">;; =================</span>
+<span class="tok-c1">;; Functions:</span>
+
+<span class="tok-c1">;; Cat -&gt; Cat</span>
+<span class="tok-c1">;; Start the world with (main 0).</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">main</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">big-bang</span> <span class="tok-n">c</span>                           <span class="tok-c1">; Cat</span>
+            <span class="tok-p">(</span><span class="tok-n">on-tick</span>   <span class="tok-n">advance-cat</span><span class="tok-p">)</span>     <span class="tok-c1">; Cat -&gt; Cat</span>
+            <span class="tok-p">(</span><span class="tok-n">to-draw</span>   <span class="tok-n">render-cat</span><span class="tok-p">)</span>      <span class="tok-c1">; Cat -&gt; Image</span>
+            <span class="tok-p">(</span><span class="tok-n">on-key</span>    <span class="tok-n">handle-key</span><span class="tok-p">)</span>      <span class="tok-c1">; Cat KeyEvent -&gt; Cat</span>
+            <span class="tok-p">(</span><span class="tok-n">on-mouse</span>  <span class="tok-n">handle-mouse</span><span class="tok-p">)))</span>  <span class="tok-c1">; Cat Integer Integer MouseEvent -&gt; Cat</span>
+
+
+<span class="tok-c1">;; Cat -&gt; Cat</span>
+<span class="tok-c1">;; Produce the next cat, by advancing it 1 px to the right.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">advance-cat</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-mi">3</span> <span class="tok-n">SPEED</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (advance-cat c) 0) ;stub</span>
+
+<span class="tok-c1">;&lt;use template from Cat&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">advance-cat</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-n">c</span> <span class="tok-n">SPEED</span><span class="tok-p">))</span>
+
+
+<span class="tok-c1">;; Cat -&gt; Image</span>
+<span class="tok-c1">;; Render the cat image at appropriate place on MTS.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-cat</span> <span class="tok-mi">4</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">place-image</span> <span class="tok-n">CAT-IMG</span> <span class="tok-mi">4</span> <span class="tok-n">CTR-Y</span> <span class="tok-n">MTS</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (render-cat c) MTS) ;stub</span>
+
+<span class="tok-c1">;&lt;use template from Cat&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">render-cat</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">place-image</span> <span class="tok-n">CAT-IMG</span> <span class="tok-n">c</span> <span class="tok-n">CTR-Y</span> <span class="tok-n">MTS</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Cat KeyEvent -&gt; Cat</span>
+<span class="tok-c1">;; Reset cat to left edge when space key is pressed.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-mi">10</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span>  <span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-mi">10</span> <span class="tok-s2">&quot;a&quot;</span><span class="tok-p">)</span> <span class="tok-mi">10</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span>  <span class="tok-mi">0</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span>  <span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span>  <span class="tok-mi">0</span> <span class="tok-s2">&quot;a&quot;</span><span class="tok-p">)</span>  <span class="tok-mi">0</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (handle-key c ke) 0) ;stub</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-n">c</span> <span class="tok-n">ke</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-n">key=?</span> <span class="tok-n">ke</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">c</span><span class="tok-p">)]</span>
+        <span class="tok-p">[</span><span class="tok-k">else</span>
+         <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">c</span><span class="tok-p">)]))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-n">c</span> <span class="tok-n">ke</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-n">key=?</span> <span class="tok-n">ke</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span> <span class="tok-mi">0</span><span class="tok-p">]</span>
+        <span class="tok-p">[</span><span class="tok-k">else</span> <span class="tok-n">c</span><span class="tok-p">]))</span>
+
+
+<span class="tok-c1">;; Cat Integer Integer MouseEvent -&gt; Cat</span>
+<span class="tok-c1">;; Move cat to x position where mouse click occurs.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-mouse</span> <span class="tok-mi">0</span> <span class="tok-mi">200</span> <span class="tok-mi">0</span> <span class="tok-s2">&quot;button-down&quot;</span><span class="tok-p">)</span> <span class="tok-mi">200</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-mouse</span> <span class="tok-mi">0</span> <span class="tok-mi">200</span> <span class="tok-mi">0</span> <span class="tok-s2">&quot;button-up&quot;</span><span class="tok-p">)</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">handle-mouse</span> <span class="tok-n">c</span> <span class="tok-n">x</span> <span class="tok-n">y</span> <span class="tok-n">me</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-n">mouse=?</span> <span class="tok-n">me</span> <span class="tok-s2">&quot;button-down&quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">c</span> <span class="tok-n">x</span> <span class="tok-n">y</span><span class="tok-p">)]</span>
+        <span class="tok-p">[</span><span class="tok-k">else</span>
+         <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">c</span> <span class="tok-n">x</span> <span class="tok-n">y</span><span class="tok-p">)]))</span>
+
+<span class="tok-c1">;(define (handle-mouse c x y me) 0) ;stub</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">handle-mouse</span> <span class="tok-n">c</span> <span class="tok-n">x</span> <span class="tok-n">y</span> <span class="tok-n">me</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-n">mouse=?</span> <span class="tok-n">me</span> <span class="tok-s2">&quot;button-down&quot;</span><span class="tok-p">)</span> <span class="tok-n">x</span><span class="tok-p">]</span>
+        <span class="tok-p">[</span><span class="tok-k">else</span> <span class="tok-n">c</span><span class="tok-p">]))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -4798,7 +5062,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-17 19:36:19 BRST
+Last updated 2017-02-17 19:50:34 BRST
 </div>
 </div>
 </body>
