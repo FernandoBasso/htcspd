@@ -900,7 +900,13 @@ Data data naturally belong together.
 
 Defining a struct doesn't produce a value.
 
+=== Compound Data Definitions
 
+.hockey player data definition example
+[source,racket,lineos]
+----
+include::./03b-compound-data/vd01-hockey-player.rkt[]
+----
 
 
 

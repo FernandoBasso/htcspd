@@ -600,6 +600,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#compund_data">Compund Data</a>
 <ul class="sectlevel2">
 <li><a href="#define_struct">define-struct</a></li>
+<li><a href="#compound_data_definitions">Compound Data Definitions</a></li>
 </ul>
 </li>
 <li><a href="#the_end">The End</a></li>
@@ -5420,6 +5421,60 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <p>Defining a struct doesn&#8217;t produce a value.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="compound_data_definitions"><a class="link" href="#compound_data_definitions">Compound Data Definitions</a></h3>
+<div class="listingblock">
+<div class="title">hockey player data definition example</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a data definition to represent hockey players, including both</span>
+<span class="tok-c1">; their first and last names.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-p">(</span><span class="tok-k">define-struct</span> <span class="tok-n">player</span> <span class="tok-p">(</span><span class="tok-n">fn</span> <span class="tok-n">ln</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Player is (make-player String String).</span>
+<span class="tok-c1">;; Interp: (make-player fn ln) is a hockey player with</span>
+<span class="tok-c1">;;           - fn: first name</span>
+<span class="tok-c1">;;           - ln: last name</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">P1</span> <span class="tok-p">(</span><span class="tok-n">make-player</span> <span class="tok-s2">&quot;Bobby&quot;</span> <span class="tok-s2">&quot;Orr&quot;</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">P2</span> <span class="tok-p">(</span><span class="tok-n">make-player</span> <span class="tok-s2">&quot;Wayne&quot;</span> <span class="tok-s2">&quot;Gretzky&quot;</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-player</span> <span class="tok-n">p</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-p">(</span><span class="tok-n">player-fn</span> <span class="tok-n">p</span><span class="tok-p">)</span>      <span class="tok-c1">; String</span>
+       <span class="tok-p">(</span><span class="tok-n">player-ln</span> <span class="tok-n">p</span><span class="tok-p">)))</span>    <span class="tok-c1">; String</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - compound: 2 fields</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -5439,7 +5494,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-18 15:09:21 BRST
+Last updated 2017-02-18 15:21:09 BRST
 </div>
 </div>
 </body>
