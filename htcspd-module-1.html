@@ -597,6 +597,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
+<li><a href="#compund_data">Compund Data</a>
+<ul class="sectlevel2">
+<li><a href="#define_struct">define-struct</a></li>
+</ul>
+</li>
 <li><a href="#the_end">The End</a></li>
 </ul>
 </div>
@@ -2870,7 +2875,61 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <div class="listingblock">
 <div class="title">HtDF with non-primiitve data</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">Unresolved</span> <span class="tok-n">directive</span> <span class="tok-n">in</span> <span class="tok-n">htcspd-module-1.adoc</span> <span class="tok-nb">-</span> <span class="tok-n">include::./02-how-to-design-data/vd05-best-city.rkt</span><span class="tok-p">[]</span>
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Imagine that you are designing a program that, among other things,</span>
+<span class="tok-c1">; has information about the names of cities in its problem domain.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a data definition to represent the name of a city.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; This is not part of the template. It was just used as part of the</span>
+<span class="tok-c1">; process to help understand the steps.</span>
+<span class="tok-c1">; | INFORMATION | DATA        |</span>
+<span class="tok-c1">; |-------------+-------------|</span>
+<span class="tok-c1">; | Vancouver   | &quot;Vancouver&quot; |</span>
+<span class="tok-c1">; | Boston      | &quot;Boston&quot;    |</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; CityName is String</span>
+<span class="tok-c1">;; Interp: the name of a city.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CN1</span> <span class="tok-s2">&quot;Boston&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CN2</span> <span class="tok-s2">&quot;Vancouver&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-city-name</span> <span class="tok-n">cn</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-n">cn</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;; - atomic non-distinct: String</span>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -5320,6 +5379,50 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </div>
 </div>
 <div class="sect1">
+<h2 id="compund_data"><a class="link" href="#compund_data">Compund Data</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Data data naturally belong together.</p>
+</div>
+<div class="sect2">
+<h3 id="define_struct"><a class="link" href="#define_struct">define-struct</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</div></td><td class="code"><span></span><span class="tok-c1">;; pos is the structure name, x and y are the fields.</span>
+<span class="tok-p">(</span><span class="tok-k">define-struct</span> <span class="tok-n">pos</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-n">y</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">P1</span> <span class="tok-p">(</span><span class="tok-n">make-pos</span> <span class="tok-mi">3</span> <span class="tok-mi">6</span><span class="tok-p">))</span>  <span class="tok-c1">; make-pos is the constructor.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">P2</span> <span class="tok-p">(</span><span class="tok-n">make-pos</span> <span class="tok-mi">2</span> <span class="tok-mi">8</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Using the selectors.</span>
+<span class="tok-p">(</span><span class="tok-n">pos-x</span> <span class="tok-n">P1</span><span class="tok-p">)</span> <span class="tok-c1">; 3</span>
+<span class="tok-p">(</span><span class="tok-n">pos-y</span> <span class="tok-n">P2</span><span class="tok-p">)</span> <span class="tok-c1">; 8</span>
+
+<span class="tok-c1">;; predicate</span>
+<span class="tok-p">(</span><span class="tok-n">pos?</span> <span class="tok-n">P1</span><span class="tok-p">)</span>      <span class="tok-c1">; #true</span>
+<span class="tok-p">(</span><span class="tok-n">pos?</span> <span class="tok-s2">&quot;hello&quot;</span><span class="tok-p">)</span> <span class="tok-c1">; #false</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Defining a struct doesn&#8217;t produce a value.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="the_end"><a class="link" href="#the_end">The End</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -5336,7 +5439,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-18 10:47:50 BRST
+Last updated 2017-02-18 15:09:21 BRST
 </div>
 </div>
 </body>

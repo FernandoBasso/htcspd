@@ -666,7 +666,7 @@ Templates show what you can use, not what you must use. Sometimes you will delet
 .HtDF with non-primiitve data
 [source,racket,lineos]
 ----
-include::./02-how-to-design-data/vd05-best-city.rkt[]
+include::./02-how-to-design-data/vd05-datadef-city-name.rkt[]
 ----
 
 ==== qa: design data icon
@@ -675,7 +675,6 @@ include::./02-how-to-design-data/vd05-best-city.rkt[]
 ----
 include::./02-how-to-design-data/pp01-icon-too-tall.rkt[]
 ----
-
 
 === HtDF X Structure of Data Orthogonality
 
@@ -874,6 +873,35 @@ include::./03a-how-to-design-worlds/pp02-trafficlight-animation.rkt[]
 ----
 
 We did not use MTS in this exercise, and they didn't use it in their solution either.
+
+
+== Compund Data
+
+Data data naturally belong together.
+
+=== define-struct
+
+[source,racket,lineos]
+----
+;; pos is the structure name, x and y are the fields.
+(define-struct pos (x y))
+
+(define P1 (make-pos 3 6))  ; make-pos is the constructor.
+(define P2 (make-pos 2 8))
+
+;; Using the selectors.
+(pos-x P1) ; 3
+(pos-y P2) ; 8
+
+;; predicate
+(pos? P1)      ; #true
+(pos? "hello") ; #false
+----
+
+Defining a struct doesn't produce a value.
+
+
+
 
 
 == The End
