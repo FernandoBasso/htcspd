@@ -5040,7 +5040,281 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </div>
 <div class="sect3">
 <h4 id="traffic_light"><a class="link" href="#traffic_light">Traffic Light</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/image</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/universe</span><span class="tok-p">)</span>
 
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design an animation of a traffic light.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Your program should show a traffic light that is red, then green,</span>
+<span class="tok-c1">; then yellow, then red etc. For this program, your changing world</span>
+<span class="tok-c1">; state data definition should be an enumeration.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; CONSTANTS</span>
+
+<span class="tok-c1">;; Radius of one light circle.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">RADIUS</span> <span class="tok-mi">20</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;; We need some padding between lights and between the</span>
+<span class="tok-c1">;; lights and their containing box.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">PAD-SIZE</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">RADIUS</span> <span class="tok-mi">4</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Outer box width, with space for some padding.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">WIDTH</span> <span class="tok-p">(</span><span class="tok-nb">*</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-n">RADIUS</span> <span class="tok-n">PAD-SIZE</span><span class="tok-p">)</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Radius is half the height of the light circle. We need its</span>
+<span class="tok-c1">;; full height (that is why we multiply it by 2), and we need</span>
+<span class="tok-c1">;; room for three lights, plus 4 paddings between the lights</span>
+<span class="tok-c1">;; and its containing box.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">HEIGHT</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-p">(</span><span class="tok-nb">*</span> <span class="tok-p">(</span><span class="tok-nb">*</span> <span class="tok-n">RADIUS</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-mi">2</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-nb">*</span> <span class="tok-n">PAD-SIZE</span> <span class="tok-mi">4</span><span class="tok-p">)))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">BG-COLOR</span> <span class="tok-s2">&quot;black&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;; The surrounding box around the three lights.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">BOX</span> <span class="tok-p">(</span><span class="tok-n">rectangle</span> <span class="tok-n">WIDTH</span> <span class="tok-n">HEIGHT</span> <span class="tok-s2">&quot;solid&quot;</span> <span class="tok-n">BG-COLOR</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; The pad to space things nicely.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">PAD</span> <span class="tok-p">(</span><span class="tok-n">rectangle</span> <span class="tok-n">WIDTH</span> <span class="tok-n">PAD-SIZE</span> <span class="tok-s2">&quot;solid&quot;</span> <span class="tok-n">BG-COLOR</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">RED-ON</span> <span class="tok-p">(</span><span class="tok-n">overlay</span>
+                <span class="tok-p">(</span><span class="tok-n">above</span> <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;solid&quot;</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">))</span>
+                <span class="tok-n">BOX</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">YELLOW-ON</span> <span class="tok-p">(</span><span class="tok-n">overlay</span>
+                <span class="tok-p">(</span><span class="tok-n">above</span> <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;solid&quot;</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">))</span>
+                <span class="tok-n">BOX</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">GREEN-ON</span> <span class="tok-p">(</span><span class="tok-n">overlay</span>
+                <span class="tok-p">(</span><span class="tok-n">above</span> <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;outline&quot;</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span>
+                       <span class="tok-n">PAD</span>
+                       <span class="tok-p">(</span><span class="tok-n">circle</span> <span class="tok-n">RADIUS</span> <span class="tok-s2">&quot;solid&quot;</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">))</span>
+                <span class="tok-n">BOX</span><span class="tok-p">))</span>
+
+
+<span class="tok-c1">;; ================</span>
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+
+<span class="tok-c1">;; LightState is one of:</span>
+<span class="tok-c1">;;  - &quot;red&quot;</span>
+<span class="tok-c1">;;  - &quot;yellow&quot;</span>
+<span class="tok-c1">;;  - &quot;green&quot;</span>
+<span class="tok-c1">;; Interp: the color of a traffic light.</span>
+
+<span class="tok-c1">;; &lt;examples are redundant for enumeration&gt;</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-light-state</span> <span class="tok-n">ls</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;red&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;yellow&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;green&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-k">...</span><span class="tok-p">)]))</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - one of: 3 cases</span>
+<span class="tok-c1">;;  - atomic distinct: &quot;red&quot;</span>
+<span class="tok-c1">;;  - atomic distinct: &quot;yellow&quot;</span>
+<span class="tok-c1">;;  - atomic distinct: &quot;green&quot;</span>
+
+
+<span class="tok-c1">;; =================================</span>
+<span class="tok-c1">;; A SIMPLE TRAFFIC LIGHT ANIMATION!</span>
+<span class="tok-c1">;; =================================</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;; LightState -&gt; Image</span>
+<span class="tok-c1">;; Start the world with (main &quot;red&quot;).</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">main</span> <span class="tok-n">ls</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">big-bang</span> <span class="tok-n">ls</span>                                <span class="tok-c1">; LightState</span>
+            <span class="tok-p">(</span><span class="tok-n">on-tick</span> <span class="tok-n">next-light</span> <span class="tok-mi">1</span><span class="tok-p">)</span>              <span class="tok-c1">; LightState -&gt; LightState</span>
+            <span class="tok-p">(</span><span class="tok-n">to-draw</span> <span class="tok-n">render-trafficlight</span><span class="tok-p">)))</span>   <span class="tok-c1">; LightState -&gt; Image</span>
+
+
+<span class="tok-c1">;; LightState -&gt; LightState</span>
+<span class="tok-c1">;; Produce next light of traffice light.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-light</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-light</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-light</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (next-light ls) &quot;red&quot;) ;stub</span>
+
+<span class="tok-c1">;&lt;took template from LightState&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">next-light</span> <span class="tok-n">ls</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;red&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;yellow&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;green&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">]))</span>
+
+
+<span class="tok-c1">;; LightState -&gt; Image</span>
+<span class="tok-c1">;; Render trafficlight with specific light on.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-trafficlight</span> <span class="tok-s2">&quot;red&quot;</span><span class="tok-p">)</span> <span class="tok-n">RED-ON</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-trafficlight</span> <span class="tok-s2">&quot;yellow&quot;</span><span class="tok-p">)</span> <span class="tok-n">YELLOW-ON</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-trafficlight</span> <span class="tok-s2">&quot;green&quot;</span><span class="tok-p">)</span> <span class="tok-n">GREEN-ON</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (render-trafficlight ls) MTS) ;stub</span>
+
+<span class="tok-c1">;&lt;took template from LightState&gt;</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">render-trafficlight</span> <span class="tok-n">ls</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;red&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-n">RED-ON</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;yellow&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-n">YELLOW-ON</span><span class="tok-p">]</span>
+        <span class="tok-p">[(</span><span class="tok-nb">string=?</span> <span class="tok-s2">&quot;green&quot;</span> <span class="tok-n">ls</span><span class="tok-p">)</span> <span class="tok-n">GREEN-ON</span><span class="tok-p">]))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We did not use MTS in this exercise, and they didn&#8217;t use it in their solution either.</p>
+</div>
 </div>
 </div>
 </div>
@@ -5062,7 +5336,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-17 19:50:34 BRST
+Last updated 2017-02-18 10:47:50 BRST
 </div>
 </div>
 </body>

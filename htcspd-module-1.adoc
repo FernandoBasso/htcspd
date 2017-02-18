@@ -868,6 +868,13 @@ include::./03a-how-to-design-worlds/pp01-contdown-animation.rtk[]
 
 ==== Traffic Light
 
+[source,racket,lineos]
+----
+include::./03a-how-to-design-worlds/pp02-trafficlight-animation.rkt[]
+----
+
+We did not use MTS in this exercise, and they didn't use it in their solution either.
+
 
 == The End
 
