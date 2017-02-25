@@ -908,6 +908,21 @@ Defining a struct doesn't produce a value.
 include::./03b-compound-data/vd01-hockey-player.rkt[]
 ----
 
+==== Practice Problems — Compound Data
+
+===== most recent movie
+
+[source,racket,lineos]
+----
+include::./03b-compound-data/pp01-most-recent-movie.rkt[]
+----
+
+
+
+=== HtDW With Compound Data
+
+.cowabunga analisys
+image:./imgs/018-cowabunga-analisys.jpg[cowabung analisys]
 
 
 == The End

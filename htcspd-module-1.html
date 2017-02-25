@@ -600,7 +600,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#compund_data">Compund Data</a>
 <ul class="sectlevel2">
 <li><a href="#define_struct">define-struct</a></li>
-<li><a href="#compound_data_definitions">Compound Data Definitions</a></li>
+<li><a href="#compound_data_definitions">Compound Data Definitions</a>
+<ul class="sectlevel3">
+<li><a href="#practice_problems_compound_data">Practice Problems — Compound Data</a>
+<ul class="sectlevel4">
+<li><a href="#most_recent_movie">most recent movie</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#htdw_with_compound_data">HtDW With Compound Data</a></li>
 </ul>
 </li>
 <li><a href="#the_end">The End</a></li>
@@ -5474,6 +5483,169 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </td></tr></table></code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="practice_problems_compound_data"><a class="link" href="#practice_problems_compound_data">Practice Problems — Compound Data</a></h4>
+<div class="sect4">
+<h5 id="most_recent_movie"><a class="link" href="#most_recent_movie">most recent movie</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;; ================</span>
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM A:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a data definition to represent a movie, including</span>
+<span class="tok-c1">; title, budget, and year released.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; To help you to create some examples, find some interesting movie facts below:</span>
+<span class="tok-c1">; &quot;Titanic&quot; - budget: 200000000 released: 1997</span>
+<span class="tok-c1">; &quot;Avatar&quot; - budget: 237000000 released: 2009</span>
+<span class="tok-c1">; &quot;The Avengers&quot; - budget: 220000000 released: 2012</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-p">(</span><span class="tok-k">define-struct</span> <span class="tok-n">movie</span> <span class="tok-p">(</span><span class="tok-n">title</span> <span class="tok-n">budget</span> <span class="tok-n">year</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Movie is (make-movie String Natural Natural).</span>
+<span class="tok-c1">;; Interp: (make-movie title budget year) is a movie with:</span>
+<span class="tok-c1">;;         - title</span>
+<span class="tok-c1">;;         - buget in USD and</span>
+<span class="tok-c1">;;         - year of release.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">M1</span> <span class="tok-p">(</span><span class="tok-n">make-movie</span> <span class="tok-s2">&quot;Titanic&quot;</span> <span class="tok-mi">200</span> <span class="tok-mi">1997</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">M2</span> <span class="tok-p">(</span><span class="tok-n">make-movie</span> <span class="tok-s2">&quot;Avatar&quot;</span> <span class="tok-mi">237</span> <span class="tok-mi">2009</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">M3</span> <span class="tok-p">(</span><span class="tok-n">make-movie</span> <span class="tok-s2">&quot;The Avengers&quot;</span> <span class="tok-mi">220</span> <span class="tok-mi">2012</span><span class="tok-p">))</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-movie</span> <span class="tok-n">m</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">m</span><span class="tok-p">)</span>   <span class="tok-c1">; String</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-budget</span> <span class="tok-n">m</span><span class="tok-p">)</span>  <span class="tok-c1">; Natural</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-year</span> <span class="tok-n">m</span><span class="tok-p">)))</span>  <span class="tok-c1">; Natural</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - compound: 3 fields</span>
+
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM B:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; You have a list of movies you want to watch, but you like to watch your</span>
+<span class="tok-c1">; rentals in chronological order. Design a function that consumes two movies</span>
+<span class="tok-c1">; and produces the title of the most recently released movie.</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Note that the rule for templating a function that consumes two compound data</span>
+<span class="tok-c1">; parameters is for the template to include all the selectors for both</span>
+<span class="tok-c1">; parameters.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; Movie Movie -&gt; String</span>
+<span class="tok-c1">;; Produce the most recently released movie.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">most-recent</span> <span class="tok-n">M1</span> <span class="tok-n">M2</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">M2</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">most-recent</span> <span class="tok-n">M3</span> <span class="tok-n">M1</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">M3</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (most-recent m1 m2) m1);</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-most-recent</span> <span class="tok-n">m1</span> <span class="tok-n">m2</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">m1</span><span class="tok-p">)</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-budget</span> <span class="tok-n">m1</span><span class="tok-p">)</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-year</span> <span class="tok-n">m1</span><span class="tok-p">)</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">m2</span><span class="tok-p">)</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-budget</span> <span class="tok-n">m2</span><span class="tok-p">)</span>
+       <span class="tok-p">(</span><span class="tok-n">movie-year</span> <span class="tok-n">m2</span><span class="tok-p">)))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">most-recent</span> <span class="tok-n">m1</span> <span class="tok-n">m2</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nb">&gt;</span> <span class="tok-p">(</span><span class="tok-n">movie-year</span> <span class="tok-n">m1</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">movie-year</span> <span class="tok-n">m2</span><span class="tok-p">))</span>
+      <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">m1</span><span class="tok-p">)</span>
+      <span class="tok-p">(</span><span class="tok-n">movie-title</span> <span class="tok-n">m2</span><span class="tok-p">)))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="htdw_with_compound_data"><a class="link" href="#htdw_with_compound_data">HtDW With Compound Data</a></h3>
+<div class="paragraph">
+<div class="title">cowabunga analisys</div>
+<p><span class="image"><img src="./imgs/018-cowabunga-analisys.jpg" alt="cowabung analisys"></span></p>
+</div>
 </div>
 </div>
 </div>
@@ -5494,7 +5666,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-18 15:21:09 BRST
+Last updated 2017-02-25 10:49:00 BRT
 </div>
 </div>
 </body>
