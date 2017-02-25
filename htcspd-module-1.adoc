@@ -917,6 +917,12 @@ include::./03b-compound-data/vd01-hockey-player.rkt[]
 include::./03b-compound-data/pp01-most-recent-movie.rkt[]
 ----
 
+===== student add to list
+[source,racket,lineos]
+----
+include::./03b-compound-data/pp02-student-grade-allergies.rkt[]
+----
+
 
 
 === HtDW With Compound Data

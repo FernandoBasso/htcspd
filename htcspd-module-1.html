@@ -605,6 +605,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#practice_problems_compound_data">Practice Problems — Compound Data</a>
 <ul class="sectlevel4">
 <li><a href="#most_recent_movie">most recent movie</a></li>
+<li><a href="#student_add_to_list">student add to list</a></li>
 </ul>
 </li>
 </ul>
@@ -5638,6 +5639,139 @@ When designing functions which produce a boolean, the purpose specifies how to i
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="student_add_to_list"><a class="link" href="#student_add_to_list">student add to list</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+
+<span class="tok-c1">;; ================</span>
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM A:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; Design a data definition to help a teacher organize their next field trip.</span>
+<span class="tok-c1">; On the trip, lunch must be provided for all students. For each student, track</span>
+<span class="tok-c1">; their name, their grade (from 1 to 12), and whether or not they have allergies.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-p">(</span><span class="tok-k">define-struct</span> <span class="tok-n">student</span> <span class="tok-p">(</span><span class="tok-n">name</span> <span class="tok-n">grade</span> <span class="tok-n">allergies</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Student is (make-student String Natural[1, 12] Boolean)</span>
+<span class="tok-c1">;; Interp: (make-student name grade allergies) is a student with a</span>
+<span class="tok-c1">;;         - name</span>
+<span class="tok-c1">;;         - grade from 1 to 12</span>
+<span class="tok-c1">;;         - a boolean flag indicating whether they have allergies or not</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">S1</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Luke Skywalker&quot;</span> <span class="tok-mi">3</span> <span class="tok-no">#false</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">S2</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Obiwan Kenobi&quot;</span> <span class="tok-mi">12</span> <span class="tok-no">#true</span><span class="tok-p">))</span>
+
+<span class="tok-c">#;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-student</span> <span class="tok-n">s</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-p">(</span><span class="tok-n">student-name</span> <span class="tok-n">s</span><span class="tok-p">)</span>            <span class="tok-c1">; String</span>
+       <span class="tok-p">(</span><span class="tok-n">student-grade</span> <span class="tok-n">s</span><span class="tok-p">)</span>           <span class="tok-c1">; Natural[1, 12]</span>
+       <span class="tok-p">(</span><span class="tok-n">student-allergies</span> <span class="tok-n">s</span><span class="tok-p">)))</span>     <span class="tok-c1">; Boolean</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - compound: 3 fields</span>
+
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;</span>
+<span class="tok-c1">; PROBLEM B:</span>
+<span class="tok-c1">;</span>
+<span class="tok-c1">; To plan for the field trip, if students are in grade 6 or below, the teacher</span>
+<span class="tok-c1">; is responsible for keeping track of their allergies. If a student has allergies,</span>
+<span class="tok-c1">; and is in a qualifying grade, their name should be added to a special list.</span>
+<span class="tok-c1">; Design a function to produce true if a student name should be added to this list.</span>
+<span class="tok-c1">;</span>
+
+<span class="tok-c1">;; Student -&gt; Boolean</span>
+<span class="tok-c1">;; Produce #true if student is in grade 6 or bellow and have allergies.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">add-to-list?</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Obiwan Kenobi&quot;</span> <span class="tok-mi">3</span> <span class="tok-no">#true</span><span class="tok-p">))</span> <span class="tok-no">#true</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">add-to-list?</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Leia Skywalker&quot;</span> <span class="tok-mi">2</span> <span class="tok-no">#false</span><span class="tok-p">))</span> <span class="tok-no">#false</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">add-to-list?</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Ada Lovelace&quot;</span> <span class="tok-mi">9</span> <span class="tok-no">#false</span><span class="tok-p">))</span> <span class="tok-no">#false</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">add-to-list?</span> <span class="tok-p">(</span><span class="tok-n">make-student</span> <span class="tok-s2">&quot;Linus Torvalds&quot;</span> <span class="tok-mi">12</span> <span class="tok-no">#true</span><span class="tok-p">))</span> <span class="tok-no">#false</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (add-to-list? s) #false) ;stub</span>
+
+<span class="tok-c1">;&lt;use template from Student&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">add-to-list?</span> <span class="tok-n">s</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">and</span> <span class="tok-p">(</span><span class="tok-nb">&lt;=</span> <span class="tok-p">(</span><span class="tok-n">student-grade</span> <span class="tok-n">s</span><span class="tok-p">)</span> <span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-nb">equal?</span> <span class="tok-p">(</span><span class="tok-n">student-allergies</span> <span class="tok-n">s</span><span class="tok-p">)</span> <span class="tok-no">#true</span><span class="tok-p">)))</span>
+
+
+<span class="tok-c1">;; Cases to test:</span>
+<span class="tok-c1">;;  - &lt;= 6 and have allergies;</span>
+<span class="tok-c1">;;  - &lt;= 6 and doesn&#39;t have allergies;</span>
+<span class="tok-c1">;;  -  &gt; 6 and have allergies;</span>
+<span class="tok-c1">;; -   &gt; 6 and doesn&#39;t have allergies;</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5666,7 +5800,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-25 10:49:00 BRT
+Last updated 2017-02-25 11:21:46 BRT
 </div>
 </div>
 </body>
