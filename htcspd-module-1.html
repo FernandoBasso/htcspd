@@ -5780,6 +5780,276 @@ When designing functions which produce a boolean, the purpose specifies how to i
 <div class="title">cowabunga analisys</div>
 <p><span class="image"><img src="./imgs/018-cowabunga-analisys.jpg" alt="cowabung analisys"></span></p>
 </div>
+<div class="paragraph">
+<p>You don&#8217;t want a function (<code>render-cow</code> in this case) to do two things like:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>choose which image to place</p>
+</li>
+<li>
+<p>place the image on proper position on MTS</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In <code>render-cow</code> we will <em>whish</em> for a <code>choose-image</code> <strong>helper function</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Helper functions need tests as well.</p>
+</div>
+<div class="listingblock">
+<div class="title">cowabunga, on-tick, to-draw and on-key</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="racket"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</div></td><td class="code"><span></span><span class="tok-kn">#lang </span><span class="tok-nn">htdp/bsl</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/image</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">require</span> <span class="tok-n">2htdp/universe</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; CONSTANTS</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">400</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">HEIGHT</span> <span class="tok-mi">200</span><span class="tok-p">)</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">CTR-Y</span> <span class="tok-p">(</span><span class="tok-nb">/</span> <span class="tok-n">HEIGHT</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">MTS</span> <span class="tok-p">(</span><span class="tok-n">empty-scene</span> <span class="tok-n">WIDTH</span> <span class="tok-n">HEIGHT</span><span class="tok-p">))</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">RCOW</span> <span class="tok-p">(</span><span class="tok-n">bitmap</span> <span class="tok-s2">&quot;./imgs/019-rcow.jpg&quot;</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">LCOW</span> <span class="tok-p">(</span><span class="tok-n">bitmap</span> <span class="tok-s2">&quot;./imgs/020-lcow.jpg&quot;</span><span class="tok-p">))</span>
+
+
+<span class="tok-c1">;; ================</span>
+<span class="tok-c1">;; DATA DEFINITIONS</span>
+<span class="tok-p">(</span><span class="tok-k">define-struct</span> <span class="tok-n">cow</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-n">dx</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Cow is (make-cow Natural[0, WIDTH] Integer)</span>
+<span class="tok-c1">;; Interp: (make-cow x dx) is a cow with x corrd and dx velocity</span>
+<span class="tok-c1">;;         x is the center of the cow</span>
+<span class="tok-c1">;;         x is in screen coords (pixels)</span>
+<span class="tok-c1">;;         dx is in pixels per tick.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C1</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">10</span>  <span class="tok-mi">3</span><span class="tok-p">))</span>    <span class="tok-c1">; at 10, moving left to right.</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-n">C2</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">20</span> <span class="tok-mi">-4</span><span class="tok-p">))</span>    <span class="tok-c1">; at 20, moving right to left.</span>
+
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">fn-for-cow</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">...</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span>     <span class="tok-c1">; Natural[0, WIDTH]</span>
+       <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">)))</span>  <span class="tok-c1">; Integer</span>
+
+<span class="tok-c1">;; Template rules used:</span>
+<span class="tok-c1">;;  - compound: 2 fields.</span>
+
+
+<span class="tok-c1">;; =========</span>
+<span class="tok-c1">;; FUNCTIONS</span>
+
+<span class="tok-c1">;; Cow -&gt; Cow</span>
+<span class="tok-c1">;; Called to make the cow go for a walk;</span>
+<span class="tok-c1">;; Start with (main (make-cow 0 3)).</span>
+<span class="tok-c1">;; No tests for the main function</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">main</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">big-bang</span> <span class="tok-n">c</span>
+            <span class="tok-p">(</span><span class="tok-n">on-tick</span> <span class="tok-n">next-cow</span><span class="tok-p">)</span>                  <span class="tok-c1">; Cow -&gt; Cow</span>
+            <span class="tok-p">(</span><span class="tok-n">to-draw</span> <span class="tok-n">render-cow</span><span class="tok-p">)</span>                <span class="tok-c1">; Cow -&gt; Image</span>
+            <span class="tok-p">(</span><span class="tok-n">on-key</span>  <span class="tok-n">handle-key</span><span class="tok-p">)))</span>              <span class="tok-c1">; Cow KeyEvent -&gt; Cow</span>
+
+<span class="tok-c1">;; Cow -&gt; Cow</span>
+<span class="tok-c1">;; Increase cow x by dx; bounce. of edges.</span>
+
+<span class="tok-c1">;; In the middle, moving right, just keep moving right.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">20</span>  <span class="tok-mi">3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-mi">20</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-mi">3</span><span class="tok-p">))</span>
+<span class="tok-c1">;; In the middle, moving left, just keep moving left.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">20</span> <span class="tok-mi">-3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-mi">20</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Reaches right edge. That is OK.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-mi">3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">3</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Reaches left edge. That is OK.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">3</span> <span class="tok-mi">-3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">0</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Would pass the right edge. Nono! Turn around.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">2</span><span class="tok-p">)</span> <span class="tok-mi">3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-n">WIDTH</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+<span class="tok-c1">;; Would pass the left edge. What the poop‽ Turn around right now!</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">2</span> <span class="tok-mi">-3</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">0</span> <span class="tok-mi">3</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (next-cow c) c) ;stub</span>
+
+<span class="tok-c1">; &lt;took template from Cow&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">next-cow</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span>
+    <span class="tok-c1">;; Would the cow pass right edge if it just kept going?</span>
+    <span class="tok-p">[(</span><span class="tok-nb">&gt;</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">))</span> <span class="tok-n">WIDTH</span><span class="tok-p">)</span>
+     <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-n">WIDTH</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">)))]</span>
+    <span class="tok-c1">;; Would the cow pass the left edge if it just kept going?</span>
+    <span class="tok-p">[(</span><span class="tok-nb">&lt;</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">))</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+     <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">0</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">)))]</span>
+    <span class="tok-c1">;; OK. Then just let the cow do whatever it was already doing.</span>
+    <span class="tok-p">[</span><span class="tok-k">else</span>
+     <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-nb">+</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">))</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">))]))</span>
+
+
+<span class="tok-c1">;; Cow -&gt; Image</span>
+<span class="tok-c1">;; Place appropriate cow image on MTS at (cow-x c) and CTR-Y.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">99</span> <span class="tok-mi">3</span><span class="tok-p">))</span>
+              <span class="tok-p">(</span><span class="tok-n">place-image</span> <span class="tok-n">RCOW</span> <span class="tok-mi">99</span> <span class="tok-n">CTR-Y</span> <span class="tok-n">MTS</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">render-cow</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">33</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+              <span class="tok-p">(</span><span class="tok-n">place-image</span> <span class="tok-n">LCOW</span> <span class="tok-mi">33</span> <span class="tok-n">CTR-Y</span> <span class="tok-n">MTS</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (render-cow c) MTS) ;stub</span>
+<span class="tok-c1">; &lt;took template from Cow&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">render-cow</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-n">place-image</span> <span class="tok-p">(</span><span class="tok-n">choose-image</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-n">CTR-Y</span> <span class="tok-n">MTS</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;; Cow -&gt; Image</span>
+<span class="tok-c1">;; Produce RCOW or LCOW depending on the direction cow is going.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">choose-image</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">10</span> <span class="tok-mi">3</span><span class="tok-p">))</span> <span class="tok-n">RCOW</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">choose-image</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">11</span> <span class="tok-mi">-3</span><span class="tok-p">))</span> <span class="tok-n">LCOW</span><span class="tok-p">)</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">choose-image</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">11</span> <span class="tok-mi">0</span><span class="tok-p">))</span> <span class="tok-n">LCOW</span><span class="tok-p">)</span>
+
+<span class="tok-c1">;(define (choose-image c) RCOW) ;stub</span>
+
+<span class="tok-c1">; &lt;took template from Cow&gt;</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">choose-image</span> <span class="tok-n">c</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nb">&gt;</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+      <span class="tok-n">RCOW</span>
+      <span class="tok-n">LCOW</span><span class="tok-p">))</span>
+
+
+<span class="tok-c1">;; Cow KeyEvent -&gt; Cow</span>
+<span class="tok-c1">;; Reverse direction of cow travel when space bar is pressed.</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">99</span> <span class="tok-mi">3</span><span class="tok-p">)</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">99</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">50</span> <span class="tok-mi">-3</span><span class="tok-p">)</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">50</span> <span class="tok-mi">3</span><span class="tok-p">))</span>
+<span class="tok-p">(</span><span class="tok-n">check-expect</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">39</span> <span class="tok-mi">-3</span><span class="tok-p">)</span> <span class="tok-s2">&quot;Z&quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-mi">39</span> <span class="tok-mi">-3</span><span class="tok-p">))</span>
+
+<span class="tok-c1">;(define (handle-key c ke) c) ;stub</span>
+
+<span class="tok-c1">;&lt;template according to KeyEvent)</span>
+<span class="tok-p">(</span><span class="tok-k">define</span> <span class="tok-p">(</span><span class="tok-n">handle-key</span> <span class="tok-n">c</span> <span class="tok-n">ke</span><span class="tok-p">)</span>
+  <span class="tok-p">(</span><span class="tok-k">cond</span> <span class="tok-p">[(</span><span class="tok-n">key=?</span> <span class="tok-n">ke</span> <span class="tok-s2">&quot; &quot;</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-n">make-cow</span> <span class="tok-p">(</span><span class="tok-n">cow-x</span> <span class="tok-n">c</span><span class="tok-p">)</span> <span class="tok-p">(</span><span class="tok-nb">-</span> <span class="tok-p">(</span><span class="tok-n">cow-dx</span> <span class="tok-n">c</span><span class="tok-p">)))]</span>
+        <span class="tok-p">[</span><span class="tok-k">else</span> <span class="tok-n">c</span><span class="tok-p">]))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -5800,7 +6070,7 @@ ul > li p { margin-bottom: 0; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-25 11:21:46 BRT
+Last updated 2017-02-26 09:45:47 BRT
 </div>
 </div>
 </body>

@@ -930,6 +930,21 @@ include::./03b-compound-data/pp02-student-grade-allergies.rkt[]
 .cowabunga analisys
 image:./imgs/018-cowabunga-analisys.jpg[cowabung analisys]
 
+You don't want a function (`render-cow` in this case) to do two things like:
+
+1. choose which image to place
+2. place the image on proper position on MTS
+
+In `render-cow` we will _whish_ for a `choose-image` *helper function*.
+
+Helper functions need tests as well.
+
+.cowabunga, on-tick, to-draw and on-key
+[source,racket,lineos]
+----
+include::./03b-compound-data/vd02-cowabunga.rkt[]
+----
+
 
 == The End
 
