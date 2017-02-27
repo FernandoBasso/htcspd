@@ -14,6 +14,10 @@
 
 (define RCOW (bitmap "./imgs/019-rcow.jpg"))
 (define LCOW (bitmap "./imgs/020-lcow.jpg"))
+(define RCOW- (rotate -2 RCOW))
+(define RCOW+ (rotate  2 RCOW))
+(define LCOW- (rotate -2 LCOW))
+(define LCOW+ (rotate  2 LCOW))
 
 
 ;; ================
@@ -85,9 +89,9 @@
 ;; Cow -> Image
 ;; Place appropriate cow image on MTS at (cow-x c) and CTR-Y.
 (check-expect (render-cow (make-cow 99 3))
-              (place-image RCOW 99 CTR-Y MTS))
+              (place-image RCOW- 99 CTR-Y MTS))
 (check-expect (render-cow (make-cow 33 -3))
-              (place-image LCOW 33 CTR-Y MTS))
+              (place-image LCOW- 33 CTR-Y MTS))
 
 ;(define (render-cow c) MTS) ;stub
 ; <took template from Cow>
@@ -95,18 +99,19 @@
   (place-image (choose-image c) (cow-x c) CTR-Y MTS))
 
 ;; Cow -> Image
-;; Produce RCOW or LCOW depending on the direction cow is going.
-(check-expect (choose-image (make-cow 10 3)) RCOW)
-(check-expect (choose-image (make-cow 11 -3)) LCOW)
-(check-expect (choose-image (make-cow 11 0)) LCOW)
+;; Produce [L|R]COW[+|-] depending on the direction cow is going.
+(check-expect (choose-image (make-cow 1  3)) RCOW-)
+(check-expect (choose-image (make-cow 2  3)) RCOW+)
+(check-expect (choose-image (make-cow 1 -4)) LCOW-)
+(check-expect (choose-image (make-cow 2 -4)) LCOW+)
 
 ;(define (choose-image c) RCOW) ;stub
 
 ; <took template from Cow>
 (define (choose-image c)
   (if (> (cow-dx c) 0)
-      RCOW
-      LCOW))
+      (if (odd? (cow-x c)) RCOW- RCOW+)
+      (if (odd? (cow-x c)) LCOW- LCOW+)))
 
 
 ;; Cow KeyEvent -> Cow
