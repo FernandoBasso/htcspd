@@ -10,9 +10,9 @@
 ;
 
 ;; ListOfString is one of:
-;; - '()
-;; - (cons String ListOfString)
-;; Interp. a list of strings.
+;;  - '()
+;;  - (cons String ListOfString)
+;; Interp: a list of strings.
 (define LOS1 '())
 (define LOS2 (cons "McGill" '()))
 (define LOS3 (cons "UBC" (cons "McGill" '())))
@@ -20,7 +20,7 @@
 (define (fn-for-los los)
   (cond  [(empty? los) (...)]
          [else
-          (... (first los)    ; String
+          (... (first los)                  ; String
                (fn-for-los (rest los)))]))  ; ListOfString
 
 ;; Template Rules Used:

@@ -54,6 +54,3 @@
               #true
               (contains-ubc? (rest los)))]))    ; ListOfString
 
-
-
-
