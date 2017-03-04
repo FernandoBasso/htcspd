@@ -20,7 +20,7 @@
 ;; ListOfNumber is one of:
 ;; - '()
 ;; - (cons Number ListOfNumber)
-;; Interp. Each number in the list is an owel weight in ounces.
+;; Interp: Each number in the list is an owel weight in ounces.
 (define LON1 '())
 (define LON2 (cons 60 (cons 42 '())))
 
@@ -31,13 +31,11 @@
          (... (first lon)
               (fn-for-lon (rest lon)))]))
 
-
 ;; Template Rules Used:
 ;; - one of: 2 cases
 ;;   - atomic distinct: empty
 ;;   - (cons Number ListOfNumber)
 ;; - self-reference: (rest lon) is ListOfNumber
-
 
 
 ;; ================================================================
@@ -71,3 +69,4 @@
         [else
          (+ 1
             (count (rest lon)))]))
+
