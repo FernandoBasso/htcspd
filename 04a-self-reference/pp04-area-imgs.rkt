@@ -28,10 +28,10 @@
               (fn-for-loi (rest loi)))]))
 
 ;; Template Rules Used:
-;; - one of: 2 cases
-;;   - atomic distinct: empty
-;;   - compound: (cons Image ListOfImage)
-;; - self-reference: (rest loi) is ListOfImage
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons Image ListOfImage)
+;;  - self-reference: (rest loi) is ListOfImage
 
 
 ;; =================
@@ -65,5 +65,4 @@
         [else
          (+ (* (image-width (first loi)) (image-height (first loi)))
             (sum-areas (rest loi)))]))
-
 

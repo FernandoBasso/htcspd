@@ -16,10 +16,10 @@
               (fn-for-lon (rest lon)))]))
 
 ;; Template Rules Used:
-;; - one of: 2 cases
+;;  - one of: 2 cases
 ;;  - atomic distinct: empty
 ;;  - compound: (cons Number ListOfNumber)
-;; - self-reference (rest lon) is ListOfNumber;
+;;  - self-reference (rest lon) is ListOfNumber;
 
 ;
 ; PROBLEM:
@@ -43,5 +43,4 @@
          (if (> (first lon) (largest (rest lon)))
              (first lon)
              (largest (rest lon)))]))
-
 

@@ -25,10 +25,10 @@
               (fn-for-lob (rest lob)))]))
 
 ;; Template Rules Used
-;; - one of: 2 cases
-;; - atomic distinct: empty
-;; - compound: (cons Boolean ListOfBoolean)
-;; - self-reference: (rest lon) is
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons Boolean ListOfBoolean)
+;;  - self-reference: (rest lon) is
 
 ;; =================
 ;; Functions:

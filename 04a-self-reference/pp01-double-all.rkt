@@ -22,10 +22,10 @@
               (fn-for-lon (rest lon)))]))
 
 ;; Template Rules Used:
-;; - one of: 2 cases
-;; - atomic distinct: empty
-;; - compound: (cons Number ListOfNumber)
-;; - self-reference (rest lon) is ListOfNumber
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons Number ListOfNumber)
+;;  - self-reference (rest lon) is ListOfNumber
 
 ;
 ; PROBLEM 2:
