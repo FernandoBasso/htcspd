@@ -37,6 +37,7 @@
 ;     the school with the lowest international student tuition.
 ;
 
+;; ========
 ;; CONTANTS
 
 (define Y-SCALE 1/200)
@@ -45,12 +46,13 @@
 (define BAR-WIDTH 30)
 (define BAR-COLOR "lightblue")
 
+;; ================
 ;; DATA DEFINITIONS
 
 (define-struct school (name tuition))
 ;; School is (make-school String Natural)
 ;; Interp: name is school name; tuition is international student
-;; tuition in USD.
+;;         tuition in USD.
 
 (define S1 (make-school "School #1" 27797))
 (define S2 (make-school "School #2" 23300))
@@ -79,13 +81,13 @@
               (fn-for-los (rest los)))]))
 
 ;; Template Rules Used:
-;; - one of: 2 cases
-;;   - atomic distinct: empty
-;;   - compound: (cons School ListOfSchool)
-;; - reference: (first los) is School
-;; - self-reference: (rest los) is ListOfSchool
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons School ListOfSchool)
+;;  - reference: (first los) is School
+;;  - self-reference: (rest los) is ListOfSchool
 
-
+;; ========
 ;; FUNCTIONS
 
 ;; ListOfSchool -> Image
