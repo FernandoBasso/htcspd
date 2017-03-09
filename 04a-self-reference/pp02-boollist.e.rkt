@@ -28,7 +28,7 @@
 ;;  - one of: 2 cases
 ;;  - atomic distinct: empty
 ;;  - compound: (cons Boolean ListOfBoolean)
-;;  - self-reference: (rest lon) is
+;;  - self-reference: (rest lon) is ListOfBoolean
 
 ;; =================
 ;; Functions:
