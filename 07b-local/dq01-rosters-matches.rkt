@@ -18,7 +18,7 @@
 
 ;; Player is String
 ;; Interp: the name of a tennis player.
-(define P0 "Maria")
+(define P0 "Obiwan")
 (define P1 "Serena")
 
 #;
@@ -30,8 +30,8 @@
 ;;  - (cons Player Roster)
 ;; Interp: a team roster, ordered from best player to worst.
 (define R0 '())
-(define R1 (list "Eugenie" "Gabriela" "Sharon" "Aleksandra"))
-(define R2 (list "Maria" "Nadia" "Elena" "Anastasia" "Svetlana"))
+(define R1 (list "Leia" "Ahsoka" "Aayla" "Doku"))
+(define R2 (list "Obiwan" "Nadia" "Yoda" "Anastasia" "Svetlana"))
 
 #;
 (define (fn-for-roster r)
@@ -44,8 +44,8 @@
 ;; Match is (make-match Player Player)
 ;; Interp: a match between p1 and p2 (with same team rank)
 ;; ASSUME: both teams have the same number of players.
-(define M0 (make-match "Eugenie" "Maria"))
-(define M1 (make-match "Gabriela" "Nadia"))
+(define M0 (make-match "Leia" "Obiwan"))
+(define M1 (make-match "Ahsoka" "Nadia"))
 
 #;
 (define (fn-for-match m)
@@ -57,8 +57,8 @@
 ;;  - (cons Match ListOfMatch)
 ;; Interp: a list of match between one team and another.
 (define LOM0 '())
-(define LOM1 (list (make-match "Eugenie" "Maria")
-                   (make-match "Gabriela" "Nadia")))
+(define LOM1 (list (make-match "Leia" "Obiwan")
+                   (make-match "Ahsoka" "Nadia")))
 
 #;
 (define (fn-for-lom lom)
@@ -73,10 +73,10 @@
 (check-expect (all-play? '() '()) #t)
 (check-expect (all-play? '() R1) #f)
 (check-expect (all-play? R1 '()) #f)
-(check-expect (all-play? (list "Eugenie" "Gabriela")
-                         (list "Sharon" "Aleksandra")) #t)
-(check-expect (all-play? (list "Eugenie" "Gabriela" "Erika")
-                         (list "Sharon" "Aleksandra")) #f)
+(check-expect (all-play? (list "Leia" "Ahsoka")
+                         (list "Aayla" "Doku")) #t)
+(check-expect (all-play? (list "Leia" "Ahsoka" "Erika")
+                         (list "Aayla" "Doku")) #f)
 
 ;
 ; +---------------------+--------+----------------------+
@@ -112,10 +112,10 @@
 ;; will be played between them.
 
 (check-expect (matches '() '()) '())
-(check-expect (matches (list "Eugenie" "Gabriela")
-                       (list "Sharon" "Aleksandra"))
-              (list (make-match "Eugenie" "Sharon")
-                    (make-match "Gabriela" "Aleksandra")))
+(check-expect (matches (list "Leia" "Ahsoka")
+                       (list "Aayla" "Doku"))
+              (list (make-match "Leia" "Aayla")
+                    (make-match "Ahsoka" "Doku")))
 
 ;
 ; | r1                   | '()        | (cons Player Roster)       |
