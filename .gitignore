@@ -1,4 +1,5 @@
 # Let's ignore some junk, backup and temporary test files.
+*.rkt~
 \#devel.dr.rkt#2#
 \#devel.rkt#
 .#devel.rkt
