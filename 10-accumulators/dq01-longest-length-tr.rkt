@@ -29,7 +29,6 @@
     (longest-length los0 0)))
 
 ;
-;
 ; `longest-length` is tail-recursive because we return from either the `if` or
 ; the `else` clauses directly by recursively calling `longest-length`.  The
 ; result of the recursive invokations of `longest-length` is not operated by
