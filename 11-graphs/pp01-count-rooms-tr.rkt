@@ -90,6 +90,8 @@
   ;; `todo` is (list-of Room); a worklist accumulator.
   ;; `visited` is (list-of String); context-preseving accumulator containing
   ;;                                names of already visited rooms.
+  ;; `count` is Natural; the number of visited rooms (not their names).
+  ;;                     It is a result so far accumulator.
   (local [(define (fn-for-room r todo visited count)
             (if (member (room-name r) visited)
                 (fn-for-lor todo visited count)
